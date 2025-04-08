@@ -10,10 +10,10 @@ const contentStyle = {
 const Advertisement = () => (
     <Carousel arrows infinite autoplay>
         <div>
-            <img src="/public/ads/ads1.jpg" alt="广告1" style={contentStyle} />
+            <img src="/ads/ads1.jpg" alt="广告1" style={contentStyle} />
         </div>
         <div>
-            <img src="/public/ads/ads2.png" alt="广告2" style={contentStyle} />
+            <img src="/ads/ads2.png" alt="广告2" style={contentStyle} />
         </div>
     </Carousel>
 );

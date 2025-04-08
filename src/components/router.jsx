@@ -6,6 +6,7 @@ import ProfilePage from "../../../bookstore/src/page/profile_showcase";
 import ProfileEditorPage from "../../../bookstore/src/page/profile_editor";
 import BookPage from "../../../bookstore/src/page/books";
 import BookDetailPage from "../../../bookstore/src/page/book_info";
+import CartPage from "../../../bookstore/src/page/cart";
 
 export default function AppRouter() {
     return (
@@ -18,6 +19,7 @@ export default function AppRouter() {
                 <Route path="/profileEdit" element={<ProfileEditorPage />} />
                 <Route path="/books" element={<BookPage />} />
                 <Route path="/books/:id" element={<BookDetailPage />} />
+                <Route path="/cart" element={<CartPage />} />
             </Routes>
         </BrowserRouter>
     );
