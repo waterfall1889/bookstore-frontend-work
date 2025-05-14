@@ -1,19 +1,29 @@
-import logo from './logo.svg';
 import '../../bookstore/src/css/App.css';
 import { ConfigProvider, theme } from 'antd';
 import AppRouter from './components/router';
+import { CartProvider } from './context/CartContext';
+import { OrderProvider } from './context/OrderContext';
 
 function App() {
   const themeToken = {
     colorPrimary: "#FF3333",
     colorInfo: "#FF3333"
-  }
-  return <ConfigProvider theme={{
-    algorithm: theme.defaultAlgorithm,
-    token: themeToken
-  }} >
-    <AppRouter />
-  </ConfigProvider>
+  };
+
+  return (
+    <ConfigProvider
+      theme={{
+        algorithm: theme.defaultAlgorithm,
+        token: themeToken
+      }}
+    >
+      <CartProvider>
+        <OrderProvider>
+          <AppRouter />
+        </OrderProvider>
+      </CartProvider>
+    </ConfigProvider>
+  );
 }
 
 export default App;

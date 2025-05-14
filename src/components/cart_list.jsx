@@ -1,39 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Row, Col, Typography, Divider, Space, Image, Button, InputNumber, Popconfirm } from 'antd';
 import { ShoppingCartOutlined, DeleteOutlined } from '@ant-design/icons';
-
-const initialCart = [
-    {
-        id: 1,
-        bookname: "挪威的森林",
-        number: 1,
-        singleCost: 40,
-        bookCover: '/bookcovers/book1.jpg'
-    },
-    {
-        id: 6,
-        bookname: "公羊的节日",
-        number: 2,
-        singleCost: 28,
-        bookCover: '/bookcovers/book6.png'
-    }
-];
+import { CartContext } from '../context/CartContext'; // 你自己的上下文路径
 
 const { Title, Text } = Typography;
 
 const CartList = () => {
-    const [cartList, setCartList] = useState(initialCart);
+    const { cartList, updateQuantity, removeFromCart } = useContext(CartContext);
 
     const handleQuantityChange = (id, value) => {
-        const updated = cartList.map(item =>
-            item.id === id ? { ...item, number: value } : item
-        );
-        setCartList(updated);
+        updateQuantity(id, value);
     };
 
     const handleDelete = (id) => {
-        const updated = cartList.filter(item => item.id !== id);
-        setCartList(updated);
+        removeFromCart(id);
     };
 
     const getTotalPrice = () => {
@@ -66,9 +46,7 @@ const CartList = () => {
                             </Space>
                         </Col>
                         <Col>
-                            <Button>
-                                结算
-                            </Button>
+                            <Button>结算</Button>
                         </Col>
                         <Col>
                             <Popconfirm
@@ -87,19 +65,14 @@ const CartList = () => {
             <div style={{ padding: '24px' }}>
                 <Row gutter={[16, 16]} align="middle" justify="space-between">
                     <Col>
-                        <Text strong style={{fontSize: '30px'}}>
+                        <Text strong style={{ fontSize: '30px' }}>
                             总计:￥{getTotalPrice()}
                         </Text>
                     </Col>
                     <Col>
-                        <Button
-                            type="primary"
-                        >
-                            全部结算
-                        </Button>
+                        <Button type="primary">全部结算</Button>
                     </Col>
                 </Row>
-
             </div>
         </div>
     );

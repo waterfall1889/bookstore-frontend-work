@@ -33,7 +33,7 @@ const { Title, Text } = Typography;
 
 const BookCommentBox = () => {
     const [commentList] = useState(comments);
-
+    //所有评论都通过 .map() 动态渲染出来，UI 上美观、模块化。
     return (
         <div style={{ padding: '24px' }}>
             <Title level={2}>评论区</Title>

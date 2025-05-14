@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import {Row, Col, Typography, Rate, Divider, Button, Space, InputNumber} from 'antd';
+import {Row, Col, Typography, Rate, Button, Space, InputNumber, message} from 'antd';
+import { useCart } from '../context/CartContext';
 
 const {Title, Text, Paragraph} = Typography;
 
@@ -116,25 +117,52 @@ const bookList = [
         id: 8,
         remains: 3,
         description: "《世说新语》是魏晋名士的群像，魏晋风度的集中展示。魏晋时期是中国历史上少有的关注、宣扬、赞赏人的个性的时期，" +
-            "士人们自觉地通过言语、行事展现自己的个性，追求与众不同，表现自己的智慧，流露自己的真情，即“魏晋风度”。" +
+            "士人们自觉地通过言语、行事展现自己的个性，追求与众不同，表现自己的智慧，流露自己的真情，即魏晋风度。" +
             "《世说新语》则通过有倾向性地选择、渲染、描写，为后人集中描绘了一批儒雅为底蕴、深情为基调、聪慧为标志、放纵为表象的魏晋名士。\n" +
             "\n" +
-            "《世说新语》文笔简洁明快、语言含蓄隽永、余味无穷,鲁迅曾经评论其“记言则玄远冷峻，记行则高简瑰奇”。作者善于抓住人物的特征，作写意式的描绘。"
+            "《世说新语》文笔简洁明快、语言含蓄隽永、余味无穷。作者善于抓住人物的特征，作写意式的描绘。"
     }
 ];
 
+
 export default function BookDetail() {
-    const {id} = useParams();
+    const { id } = useParams();
+    const { addToCart } = useCart();
     const [book, setBook] = useState(null);
+    const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
         const selectedBook = bookList.find(item => String(item.id) === id);
         setBook(selectedBook);
+        setQuantity(1);
     }, [id]);
+
+    const handleAddToCart = () => {
+        if (book.remains === 0) {
+            alert("该图书已售罄");
+            return;
+        }
+        if (quantity > book.remains) {
+            alert("超过库存数量！");
+            return;
+        }
+
+        addToCart({
+            id: book.id,
+            title: book.bookname,
+            author: book.author,
+            price: parseFloat(book.price),
+            cover: book.bookpicture,
+            rate: book.rate,
+            quantity: quantity
+        });
+        
+        alert(`成功添加 ${quantity} 本《${book.bookname}》到购物车`);
+    };
 
     if (!book) {
         return (
-            <div style={{padding: '24px'}}>
+            <div style={{ padding: '24px' }}>
                 <Title level={3}>未找到图书</Title>
                 <Text type="secondary">请检查图书 ID 是否正确。</Text>
             </div>
@@ -142,8 +170,7 @@ export default function BookDetail() {
     }
 
     return (
-
-        <div style={{padding: '24px'}}>
+        <div style={{ padding: '24px' }}>
             <Row gutter={[32, 24]}>
                 <Col xs={24} md={10}>
                     <img
@@ -160,44 +187,40 @@ export default function BookDetail() {
                 <Col xs={24} md={14}>
                     <Title level={2}>{book.bookname}</Title>
                     <Text strong>作者：</Text><Text>{book.author}</Text>
-                    <br/><br/>
+                    <br /><br />
                     <Text strong>评分：</Text>
-                    <Rate allowHalf disabled defaultValue={book.rate}/>
-                    <br/><br/>
+                    <Rate allowHalf disabled defaultValue={book.rate} />
+                    <br /><br />
                     <Text strong>价格：</Text>
-                    <Text type="danger" style={{fontSize: '18px'}}>￥{book.price}</Text>
-                    <br/><br/>
+                    <Text type="danger" style={{ fontSize: '18px' }}>￥{book.price}</Text>
+                    <br /><br />
                     <Text strong>存货数量：</Text><Text>{book.remains}</Text>
-                    <br/><br/>
+                    <br /><br />
                     <Text strong>简介：</Text>
-                    <Paragraph style={{marginTop: 12}}>
-                        {book.description}
-                    </Paragraph>
-                    <Space direction="vertical">
-                        <Row>
-                            <Text strong>购买数量：</Text>
-                            <InputNumber
-                                min={1}
-                                max={book.remains}
-                                disabled={book.remains === 0}
-                                defaultValue={1}
-                            />
-                        </Row>
-                        <Row>
-                            <Space size={15}>
-                                <Button type="primary" disabled={book.remains === 0}>
-                                    加入购物车
-                                </Button>
-                                <Button disabled={book.remains === 0}>
-                                    购买
-                                </Button>
-                            </Space>
-                        </Row>
+                    <Paragraph>{book.description}</Paragraph>
+                    <br />
+                    <Space>
+                        <Text strong>购买数量：</Text>
+                        <InputNumber
+                            min={1}
+                            max={book.remains}
+                            value={quantity}
+                            onChange={setQuantity}
+                            style={{ width: '100px' }}
+                        />
                     </Space>
-
+                    <br /><br />
+                    <Button
+                        type="primary"
+                        size="large"
+                        onClick={handleAddToCart}
+                        disabled={book.remains === 0}
+                    >
+                        加入购物车
+                    </Button>
                 </Col>
             </Row>
         </div>
-
     );
 }
+

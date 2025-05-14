@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from 'antd/es/layout/layout';
-import {BookOutlined, UserOutlined} from '@ant-design/icons';
 import {Avatar, Image, Space} from 'antd';
 
 const HeaderComponent = () => {

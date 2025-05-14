@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, Button, Form, Input, Upload, message } from 'antd';
-import { UserOutlined, UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons';
 
 const Profile_editor = () => {
     const navigate = useNavigate();
@@ -53,7 +53,7 @@ const Profile_editor = () => {
                     <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
                         <Avatar
                             size={80}
-                            src={'/head.jpg'}
+                            src={avatarUrl ||'/head.jpg'}
                         />
                         <Upload
                             showUploadList={false}
