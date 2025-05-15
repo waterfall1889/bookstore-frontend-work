@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import LoginForm from "../components/login_chart.jsx";
 
+
 const LoginPage = () => {
     const navigate = useNavigate();
 
@@ -9,6 +10,7 @@ const LoginPage = () => {
         try {
             console.log("登陆成功，准备跳转到书籍列表页面");  // 添加日志
             navigate("/books");
+
         }
         catch (error) {
             console.error("处理登录成功回调时发生错误:", error);  // 添加错误日志

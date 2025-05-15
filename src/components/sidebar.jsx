@@ -7,6 +7,7 @@ import {
     UserOutlined
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
+import {clearUserId} from "../utils/ID-Storage";
 
 const Sidebar = () => {
     const navigate = useNavigate();
@@ -35,7 +36,7 @@ const Sidebar = () => {
                 {
                     key: 'logout',
                     label: '退出登录',
-                    onClick: () => { navigate('/login'); }
+                    onClick: () => { navigate('/login');clearUserId(); }
                 }
             ]
         },

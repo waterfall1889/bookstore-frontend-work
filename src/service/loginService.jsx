@@ -1,3 +1,5 @@
+import {saveUserId} from "../utils/ID-Storage";
+
 export async function loginRequest(username, password) {
     const requestData = { username, password };
 
@@ -16,6 +18,8 @@ export async function loginRequest(username, password) {
             throw new Error("登录失败");
         }
 
+        saveUserId(data.IDNumber);
+        console.log("登陆账号: ",data.IDNumber);
         console.log("登录成功，返回数据:", data);
         return data;
     }

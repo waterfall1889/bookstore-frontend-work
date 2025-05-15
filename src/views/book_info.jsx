@@ -12,7 +12,7 @@ const BookDetailPage = () => {
         <BasicLayout>
             <BookDetails bookId={id} />
             <Divider />
-            <BookCommentBox />
+            <BookCommentBox bookId={id} />
         </BasicLayout>
     );
 };

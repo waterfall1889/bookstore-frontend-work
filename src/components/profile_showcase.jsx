@@ -1,23 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Flex, Avatar, Typography, Card } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Button, Flex, Avatar, Typography, Card, message } from 'antd';
+import { fetchUserProfile } from '../service/getProfileService';
+import {getUserId} from "../utils/ID-Storage";
 
 const { Title, Paragraph } = Typography;
 
 const Profile_showcase = () => {
     const navigate = useNavigate();
+    const [userInfo, setUserInfo] = useState(null);
 
-    // 使用 useState 来管理用户信息
-    const [userInfo, setUserInfo] = useState({
-        name: 'admin',
-        IDNumber: '54749110',
-        email: 'zhangsan@example.com',
-        role: '普通用户',
-        registeredAt: '2024-4-1',
-        phoneNumber: '0123456789',
-        description: '这是一个测试用户，未来将通过后端导入信息。',
-    });
+    useEffect(() => {
+
+        const userId = getUserId();
+
+        fetchUserProfile(userId)
+            .then(data => setUserInfo(data))
+            .catch(() => message.error('加载用户信息失败'));
+    }, []);
+
+    if (!userInfo) {
+        return <div>加载中...</div>;
+    }
 
     return (
         <Flex justify="center" align="center" style={{ minHeight: '80vh' }}>
@@ -31,14 +35,14 @@ const Profile_showcase = () => {
                 }}
             >
                 <Flex vertical align="center" gap={24}>
-                    <Avatar size={120} src={'/head.jpg'} />
+                    <Avatar size={120} src={userInfo.avatar} />
                     <div style={{ width: '100%' }}>
                         <Title level={3} style={{ textAlign: 'center' }}>
                             {userInfo.name}
                         </Title>
                         <Paragraph><strong>ID：</strong>{userInfo.IDNumber}</Paragraph>
                         <Paragraph><strong>邮箱：</strong>{userInfo.email}</Paragraph>
-                        <Paragraph><strong>身份：</strong>{userInfo.role}</Paragraph>
+                        <Paragraph><strong>用户级别：</strong>{userInfo.role === 'BASIC' ? '普通会员':'超级会员'}</Paragraph>
                         <Paragraph><strong>注册时间：</strong>{userInfo.registeredAt}</Paragraph>
                         <Paragraph><strong>绑定手机号码：</strong>{userInfo.phoneNumber}</Paragraph>
                         <Paragraph><strong>个人说明：</strong>{userInfo.description}</Paragraph>
@@ -53,4 +57,3 @@ const Profile_showcase = () => {
 };
 
 export default Profile_showcase;
-

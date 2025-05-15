@@ -1,81 +1,47 @@
-import React, { useContext } from 'react';
-import { Row, Col, Typography, Divider, Space, Image, Button, InputNumber, Popconfirm } from 'antd';
-import { ShoppingCartOutlined, DeleteOutlined } from '@ant-design/icons';
-import { CartContext } from '../context/CartContext'; // 你自己的上下文路径
+import React from 'react';
+import { Row, Col, Image, Typography, InputNumber, Button } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
-const CartList = () => {
-    const { cartList, updateQuantity, removeFromCart } = useContext(CartContext);
-
-    const handleQuantityChange = (id, value) => {
-        updateQuantity(id, value);
-    };
-
-    const handleDelete = (id) => {
-        removeFromCart(id);
-    };
-
-    const getTotalPrice = () => {
-        return cartList.reduce((total, item) => total + item.singleCost * item.number, 0);
-    };
-
+const CartItem = ({ item, onUpdate, onRemove }) => {
     return (
-        <div style={{ padding: '24px' }}>
-            <Title level={2}><ShoppingCartOutlined /> 我的购物车 </Title>
-            <Divider />
-            {cartList.map((item) => (
-                <div key={item.id} style={{ marginBottom: '24px' }}>
-                    <Row gutter={[16, 16]} align="middle" justify="space-between">
-                        <Col>
-                            <Image src={item.bookCover} height={100} width={75} />
-                        </Col>
-                        <Col flex="auto">
-                            <Space direction="vertical">
-                                <Text strong>{item.bookname}</Text>
-                                <div>
-                                    数量：
-                                    <InputNumber
-                                        min={1}
-                                        value={item.number}
-                                        onChange={(value) => handleQuantityChange(item.id, value)}
-                                    />
-                                </div>
-                                <Text>单价：¥{item.singleCost}</Text>
-                                <Text type="success">小计：¥{item.singleCost * item.number}</Text>
-                            </Space>
-                        </Col>
-                        <Col>
-                            <Button>结算</Button>
-                        </Col>
-                        <Col>
-                            <Popconfirm
-                                title="确认删除该商品？"
-                                onConfirm={() => handleDelete(item.id)}
-                                okText="确认"
-                                cancelText="取消"
-                            >
-                                <Button danger icon={<DeleteOutlined />} />
-                            </Popconfirm>
-                        </Col>
-                    </Row>
-                    <Divider />
+        <Row align="middle" gutter={16} style={{ padding: 16 }}>
+            <Col span={4}>
+                <Image
+                    src={item.cover}
+                    alt={item.title}
+                    preview={false}
+                    style={{ borderRadius: 4 }}
+                />
+            </Col>
+
+            <Col span={12}>
+                <Text strong style={{ fontSize: 16 }}>{item.title}</Text>
+                <div style={{ marginTop: 8 }}>
+                    <Text type="secondary">单价：¥{item.price.toFixed(2)}</Text>
                 </div>
-            ))}
-            <div style={{ padding: '24px' }}>
-                <Row gutter={[16, 16]} align="middle" justify="space-between">
-                    <Col>
-                        <Text strong style={{ fontSize: '30px' }}>
-                            总计:￥{getTotalPrice()}
-                        </Text>
-                    </Col>
-                    <Col>
-                        <Button type="primary">全部结算</Button>
-                    </Col>
-                </Row>
-            </div>
-        </div>
+            </Col>
+
+            <Col span={6}>
+                <InputNumber
+                    min={1}
+                    value={item.quantity}
+                    onChange={value => onUpdate(item.id, value)}
+                    style={{ width: '100%' }}
+                />
+            </Col>
+
+            <Col span={2}>
+                <Button
+                    type="text"
+                    danger
+                    icon={<DeleteOutlined />}
+                    onClick={() => onRemove(item.id)}
+                />
+            </Col>
+        </Row>
     );
 };
 
-export default CartList;
+export default CartItem;
