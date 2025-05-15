@@ -8,7 +8,7 @@ import {updateProfileService} from "../service/updateProfileService";
 const Profile_editor = () => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
-    
+
     const [avatarUrl, setAvatarUrl] = useState(null);
 
     const userId = getUserId();
