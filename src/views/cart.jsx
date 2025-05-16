@@ -6,7 +6,8 @@ import { getUserId } from "../utils/ID-Storage";
 import CartItem from '../components/cart_list';
 import BasicLayout from "../components/layout";
 import {removeCartItem} from "../service/removeCartItemService";
-import {useNavigate} from "react-router-dom";  // 引入 CartItem 组件
+import {useNavigate} from "react-router-dom";
+import {Checkout} from "../service/CheckoutService";  // 引入 CartItem 组件
 
 const { Title, Text } = Typography;
 
@@ -57,8 +58,12 @@ const CartPage = () => {
         setCartData(data);
     };
 
-    const handleCheckout = async (userId) => {
-
+    const handleCheckout = async () => {
+        await Checkout(getUserId());
+        const data = await fetchCart(getUserId()); // 重新加载购物车
+        setCartData(data);
+        alert("成功结算所有商品！即将跳转前往订单页面...");
+        navigate('/orders');
     }
 
 
@@ -90,7 +95,7 @@ const CartPage = () => {
                                 size="large"
                                 onClick={handleCheckout}
                             >
-                                去结算 ({cartData.items.length}件)
+                                去结算
                             </Button>
                         </Col>
                     </Row>

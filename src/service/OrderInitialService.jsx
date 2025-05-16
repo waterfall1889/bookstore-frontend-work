@@ -1,0 +1,6 @@
+export async function fetchOrders(userId) {
+    const response = await fetch('http://localhost:8080/api/OrderInitial/' + userId);
+    if (!response.ok)
+        throw new Error("加载书籍评论失败");
+    return await response.json();
+}
