@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Row, Col, Typography, Rate, Button, Space, InputNumber, message, Spin } from 'antd';
-import { useCart } from '../context/CartContext';
+import { Row, Col, Typography, Button, Space, InputNumber, message, Spin } from 'antd';
 import { fetchBookDescription } from '../service/bookDescriptionService';
 import { fetchBook } from '../service/bookcardService';
+import { getUserId } from "../utils/ID-Storage";
+import { addToCart } from '../service/addCartService'; // 假设你有这个服务
 
 const { Title, Text, Paragraph } = Typography;
 
 export default function BookDetail() {
     const { id } = useParams();
-    const { addToCart } = useCart();
     const [book, setBook] = useState(null);
     const [loading, setLoading] = useState(true);
     const [quantity, setQuantity] = useState(1);
@@ -38,30 +38,6 @@ export default function BookDetail() {
         loadBook();
     }, [id]);
 
-    const handleAddToCart = () => {
-        if (!book) return;
-
-        if (book.remain_number === 0) {
-            message.warning("该图书已售罄");
-            return;
-        }
-        if (quantity > book.remain_number) {
-            message.warning("超过库存数量！");
-            return;
-        }
-
-        addToCart({
-            id: book.item_id,
-            title: book.item_name,
-            author: book.author,
-            price: parseFloat(book.price),
-            cover: book.cover_url,
-            rate: 0  // 后端没有评分字段，设为 0 或忽略
-        }, quantity);
-
-        alert(`成功添加 ${quantity} 本《${book.item_name}》到购物车`);
-    };
-
     if (loading) {
         return (
             <div style={{ padding: '24px', textAlign: 'center' }}>
@@ -77,6 +53,18 @@ export default function BookDetail() {
                 <Text type="secondary">请检查图书 ID 是否正确。</Text>
             </div>
         );
+    }
+
+    const handleAdd = async () => {
+        const userId = getUserId(); // 获取当前用户的 ID
+
+        try {
+            const response = await addToCart(userId, book.item_id, quantity);
+            alert("已成功将"+ quantity + "本该书籍加入购物车");
+        } catch (error) {
+            console.error("添加到购物车失败", error);
+            message.error("加入购物车时发生错误");
+        }
     }
 
     return (
@@ -97,9 +85,6 @@ export default function BookDetail() {
                 <Col xs={24} md={14}>
                     <Title level={2}>{book.item_name}</Title>
                     <Text strong>作者：</Text><Text>{book.author}</Text>
-                    {/*<br /><br />
-                    <Text strong>评分：</Text>
-                    <Rate allowHalf disabled defaultValue={0} />*/}
                     <br /><br />
                     <Text strong>价格：</Text>
                     <Text type="danger" style={{ fontSize: '18px' }}>￥{book.price}</Text>
@@ -123,8 +108,8 @@ export default function BookDetail() {
                     <Button
                         type="primary"
                         size="large"
-                        onClick={handleAddToCart}
                         disabled={book.remain_number === 0}
+                        onClick={handleAdd}
                     >
                         加入购物车
                     </Button>

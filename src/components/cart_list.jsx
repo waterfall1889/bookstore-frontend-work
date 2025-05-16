@@ -1,44 +1,42 @@
 import React from 'react';
-import { Row, Col, Image, Typography, InputNumber, Button } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { Row, Col, Image, Typography, Button } from 'antd';
 
 const { Text } = Typography;
 
-const CartItem = ({ item, onUpdate, onRemove }) => {
+
+const CartItem = ({ item,handleItemRemove }) => {
+
+    const handleDelete = () => {
+        handleItemRemove(item.itemId);  // 调用父组件传来的删除函数
+        alert("已经成功删除购物车商品！");
+    };
+
     return (
         <Row align="middle" gutter={16} style={{ padding: 16 }}>
             <Col span={4}>
                 <Image
-                    src={item.cover}
-                    alt={item.title}
+                    src={item.coverUrl}  // 使用 coverUrl 渲染图片
+                    alt={item.itemName}
                     preview={false}
                     style={{ borderRadius: 4 }}
                 />
             </Col>
 
             <Col span={12}>
-                <Text strong style={{ fontSize: 16 }}>{item.title}</Text>
+                <Text strong style={{ fontSize: 16 }}>{item.itemName}</Text>
                 <div style={{ marginTop: 8 }}>
                     <Text type="secondary">单价：¥{item.price.toFixed(2)}</Text>
                 </div>
             </Col>
 
-            <Col span={6}>
-                <InputNumber
-                    min={1}
-                    value={item.quantity}
-                    onChange={value => onUpdate(item.id, value)}
-                    style={{ width: '100%' }}
-                />
+            <Col span={4}>
+                <Text>数量: {item.counts}</Text>
             </Col>
 
-            <Col span={2}>
-                <Button
-                    type="text"
-                    danger
-                    icon={<DeleteOutlined />}
-                    onClick={() => onRemove(item.id)}
-                />
+            <Col span={4}>
+                <Button type="primary" danger onClick={() => handleDelete()}>
+                    删除
+                </Button>
             </Col>
         </Row>
     );

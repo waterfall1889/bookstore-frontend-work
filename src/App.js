@@ -1,8 +1,6 @@
 import '../../bookstore/src/css/App.css';
 import { ConfigProvider, theme } from 'antd';
 import AppRouter from './components/router';
-import { CartProvider } from './context/CartContext';
-import { OrderProvider } from './context/OrderContext';
 
 function App() {
   const themeToken = {
@@ -17,11 +15,8 @@ function App() {
         token: themeToken
       }}
     >
-      <CartProvider>
-        <OrderProvider>
-          <AppRouter />
-        </OrderProvider>
-      </CartProvider>
+      <AppRouter />
+
     </ConfigProvider>
   );
 }

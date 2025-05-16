@@ -1,28 +1,14 @@
 import React from 'react';
-import { Card, Typography, Rate, Image, Button, message } from 'antd';
+import { Card, Typography, Image, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
 
 const { Title, Text } = Typography;
 
 const Book_card = ({ book }) => {
     const navigate = useNavigate();
-    const { addToCart } = useCart();
 
     const goToDetail = () => {
         navigate(`/books/${book.item_id}`);
-    };
-
-    const handleAddToCart = () => {
-        addToCart({
-            id: book.item_id,
-            title: book.item_name,
-            author: book.author,
-            price: parseFloat(book.price),
-            cover: book.cover_url,
-            rate: 4.5  // 后端未返回评分字段，可以写死默认值
-        });
-        message.success('已添加到购物车');
     };
 
     return (
@@ -52,9 +38,6 @@ const Book_card = ({ book }) => {
                 <Button type="primary" size="small" style={{ width: '100%' }} onClick={goToDetail}>
                     查看详情
                 </Button>
-                {/*<Button size="small" style={{ width: '100%' }} onClick={handleAddToCart}>
-                    加入购物车
-                </Button>*/}
             </div>
         </Card>
     );
