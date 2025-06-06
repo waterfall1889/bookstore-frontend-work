@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Typography, Rate, Divider, Space, Avatar, Spin, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { fetchBookComment } from '../service/commentService';
-import {fetchUserProfile} from "../service/getProfileService";
 
 const { Title, Text } = Typography;
 
@@ -14,7 +13,7 @@ const BookCommentBox = ({ bookId }) => {
         const loadComments = async () => {
             try {
                 const data = await fetchBookComment(bookId);
-                // 兼容后端返回的是单条或多条评论
+                // 确保处理单条评论的情况
                 const list = Array.isArray(data) ? data : [data];
                 setCommentList(list);
             } catch (err) {
@@ -37,20 +36,20 @@ const BookCommentBox = ({ bookId }) => {
                 <Text type="secondary">暂无评论</Text>
             ) : (
                 commentList.map((comment) => (
-                    <div key={comment.comment_id} style={{ marginBottom: '24px' }}>
+                    <div key={comment.commentId} style={{ marginBottom: '24px' }}>
                         <Row gutter={[16, 16]} align="middle">
                             <Col>
                                 <Avatar
-                                    src={comment.comment_avatar || <UserOutlined />}
+                                    src={comment.userProfile?.avatarUrl || <UserOutlined />}
                                     size={50}
-                                    alt={comment.commenter_id}
+                                    alt={comment.commenterId}
                                 />
                             </Col>
                             <Col flex="auto">
                                 <Space direction="vertical" style={{ width: '100%' }}>
                                     <Space>
-                                        <Text strong>{comment.comment_username}</Text>
-                                        <Text type="secondary">{comment.comment_time}</Text>
+                                        <Text strong>{comment.userMeta?.username}</Text>
+                                        <Text type="secondary">{comment.commentTime}</Text>
                                     </Space>
                                     <Rate disabled defaultValue={comment.rating} />
                                     <Text style={{ display: 'block' }}>{comment.comment}</Text>

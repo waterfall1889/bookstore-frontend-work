@@ -8,7 +8,7 @@ const Book_card = ({ book }) => {
     const navigate = useNavigate();
 
     const goToDetail = () => {
-        navigate(`/books/${book.item_id}`);
+        navigate(`/books/${book.itemId}`);
     };
 
     return (
@@ -22,17 +22,17 @@ const Book_card = ({ book }) => {
             }}
             cover={
                 <Image
-                    src={book.cover_url}
-                    alt={book.item_name}
+                    src={book.coverUrl}
+                    alt={book.itemName}
                     height={300}
                     style={{ objectFit: 'cover' }}
                     preview={false}
                 />
             }
         >
-            <Title level={5} style={{ marginBottom: 8 }}>{book.item_name}</Title>
+            <Title level={5} style={{ marginBottom: 8 }}>{book.itemName}</Title>
             <Text type="secondary">作者：{book.author}</Text><br />
-            <Text strong style={{ color: '#fa541c' }}>价格：¥{book.price}</Text><br />
+            <Text strong style={{ color: '#fa541c' }}>价格：¥{Number(book.price).toFixed(2)}</Text><br />
             {/*<Rate disabled allowHalf defaultValue={4.5} style={{ fontSize: 14, marginBottom: 12 }} /><br />*/}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <Button type="primary" size="small" style={{ width: '100%' }} onClick={goToDetail}>

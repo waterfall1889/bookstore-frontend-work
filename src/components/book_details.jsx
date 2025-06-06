@@ -59,9 +59,10 @@ export default function BookDetail() {
         const userId = getUserId(); // 获取当前用户的 ID
 
         try {
-            const response = await addToCart(userId, book.item_id, quantity);
+            const response = await addToCart(userId, book.itemId, quantity);
             alert("已成功将"+ quantity + "本该书籍加入购物车");
-        } catch (error) {
+        }
+        catch (error) {
             console.error("添加到购物车失败", error);
             message.error("加入购物车时发生错误");
         }
@@ -72,8 +73,8 @@ export default function BookDetail() {
             <Row gutter={[32, 24]}>
                 <Col xs={24} md={10}>
                     <img
-                        src={book.cover_url}
-                        alt={book.item_name}
+                        src={book.coverUrl}
+                        alt={book.itemName}
                         style={{
                             width: '100%',
                             borderRadius: '8px',
@@ -83,11 +84,11 @@ export default function BookDetail() {
                 </Col>
 
                 <Col xs={24} md={14}>
-                    <Title level={2}>{book.item_name}</Title>
+                    <Title level={2}>{book.itemName}</Title>
                     <Text strong>作者：</Text><Text>{book.author}</Text>
                     <br /><br />
                     <Text strong>价格：</Text>
-                    <Text type="danger" style={{ fontSize: '18px' }}>￥{book.price}</Text>
+                    <Text type="danger" style={{ fontSize: '18px' }}>￥{Number(book.price).toFixed(2)}</Text>
                     <br /><br />
                     <Text strong>存货数量：</Text><Text>{book.remain_number}</Text>
                     <br /><br />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Typography, Card, Empty, Button } from 'antd';
+import { Row, Col, Typography, Card, Empty, Button, message, Spin } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { fetchCart } from "../service/CartInitialService";
 import { getUserId } from "../utils/ID-Storage";
@@ -7,14 +7,15 @@ import CartItem from '../components/cart_list';
 import BasicLayout from "../components/layout";
 import {removeCartItem} from "../service/removeCartItemService";
 import {useNavigate} from "react-router-dom";
-import {Checkout} from "../service/CheckoutService";  // 引入 CartItem 组件
+import {Checkout} from "../service/CheckoutService";
 
 const { Title, Text } = Typography;
 
 const CartPage = () => {
     const navigate = useNavigate();
-    const [cartData, setCartData] = useState(null);  // 存储购物车数据
-    const [loading, setLoading] = useState(true);    // 控制加载状态
+    const [cartData, setCartData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [checkoutLoading, setCheckoutLoading] = useState(false);
 
     useEffect(() => {
         const loadCartData = async () => {
@@ -22,7 +23,7 @@ const CartPage = () => {
                 const data = await fetchCart(getUserId());
                 setCartData(data);
             } catch (error) {
-                console.error(error.message || '加载购物车失败');
+                message.error(error.message || '加载购物车失败');
             } finally {
                 setLoading(false);
             }
@@ -32,11 +33,16 @@ const CartPage = () => {
     }, []);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <BasicLayout>
+                <div style={{ textAlign: 'center', padding: '50px' }}>
+                    <Spin size="large" />
+                </div>
+            </BasicLayout>
+        );
     }
 
-    // 如果购物车为空，显示空状态
-    if (!cartData || !cartData.items || cartData.items.length === 0) {
+    if (!cartData || cartData.length === 0) {
         return (
             <BasicLayout>
                 <Empty description="购物车空空如也" style={{ marginTop: 48 }}>
@@ -45,27 +51,36 @@ const CartPage = () => {
                     </Button>
                 </Empty>
             </BasicLayout>
-
         );
     }
 
-    // 计算总价
-    const totalCost = cartData.items.reduce((acc, item) => acc + item.price * item.counts, 0);
+    const totalCost = cartData.reduce((acc, item) => acc + item.item.price * item.counts, 0);
 
     const handleItemRemove = async (itemId) => {
-        await removeCartItem(getUserId(), itemId);
-        const data = await fetchCart(getUserId()); // 重新加载购物车
-        setCartData(data);
+        try {
+            await removeCartItem(getUserId(), itemId);
+            const data = await fetchCart(getUserId());
+            setCartData(data);
+            message.success('商品已从购物车中移除');
+        } catch (error) {
+            message.error('删除商品失败：' + error.message);
+        }
     };
 
     const handleCheckout = async () => {
-        await Checkout(getUserId());
-        const data = await fetchCart(getUserId()); // 重新加载购物车
-        setCartData(data);
-        alert("成功结算所有商品！即将跳转前往订单页面...");
-        navigate('/orders');
-    }
-
+        try {
+            setCheckoutLoading(true);
+            await Checkout(getUserId());
+            const data = await fetchCart(getUserId());
+            setCartData(data);
+            message.success('结算成功！即将跳转前往订单页面...');
+            navigate('/orders');
+        } catch (error) {
+            message.error('结算失败：' + error.message);
+        } finally {
+            setCheckoutLoading(false);
+        }
+    };
 
     return (
         <BasicLayout>
@@ -75,10 +90,16 @@ const CartPage = () => {
                 </Title>
 
                 <Card>
-                    {cartData.items.map(item => (
+                    {cartData.map(cartItem => (
                         <CartItem
-                            key={item.itemId}
-                            item={item}          // 将 item 传递给 CartItem
+                            key={cartItem.itemId}
+                            item={{
+                                itemId: cartItem.itemId,
+                                itemName: cartItem.item.itemName,
+                                price: cartItem.item.price,
+                                counts: cartItem.counts,
+                                coverUrl: cartItem.item.coverUrl
+                            }}
                             handleItemRemove={handleItemRemove}
                         />
                     ))}
@@ -94,6 +115,7 @@ const CartPage = () => {
                                 type="primary"
                                 size="large"
                                 onClick={handleCheckout}
+                                loading={checkoutLoading}
                             >
                                 去结算
                             </Button>

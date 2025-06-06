@@ -8,18 +8,14 @@ import {updateProfileService} from "../service/updateProfileService";
 const Profile_editor = () => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
-
     const [avatarUrl, setAvatarUrl] = useState(null);
-
     const userId = getUserId();
 
     useEffect(() => {
         fetchInitialProfile(userId).then((data) => {
             form.setFieldsValue({
                 username: data.user_name,
-                password: data.password,
-                password2: data.password,
-                email: data.user_email,
+                email: data.email,
                 self_description: data.description,
             });
             setAvatarUrl(data.avatar_url);
@@ -32,20 +28,18 @@ const Profile_editor = () => {
         const requestBody = {
             user_id: userId,
             user_name: values.username,
-            password: values.password,
             user_email: values.email,
             description: values.self_description,
             avatar_url: avatarUrl
         };
         try {
             await updateProfileService(userId, requestBody);
-            alert('信息修改保存成功！');
+            message.success('信息修改保存成功！');
             navigate('/profile');
         } catch (err) {
-            alert('保存失败: ' + err.message);
+            message.error('保存失败: ' + err.message);
         }
     };
-
 
     return (
         <div style={{ padding: '40px 20px', maxWidth: 800 }}>
@@ -66,35 +60,12 @@ const Profile_editor = () => {
                     <Input />
                 </Form.Item>
 
-                <Form.Item label="密码" name="password" rules={[{ required: true, message: '请输入密码！' }]}>
-                    <Input.Password />
-                </Form.Item>
-
-                <Form.Item
-                    label="重复密码"
-                    name="password2"
-                    dependencies={['password']}
-                    rules={[
-                        { required: true, message: '请再次输入密码！' },
-                        ({ getFieldValue }) => ({
-                            validator(_, value) {
-                                if (!value || getFieldValue('password') === value) {
-                                    return Promise.resolve();
-                                }
-                                return Promise.reject(new Error('两次输入的密码不一致！'));
-                            },
-                        }),
-                    ]}
-                >
-                    <Input.Password />
-                </Form.Item>
-
                 <Form.Item label="邮箱" name="email" rules={[{ required: true, message: '请输入邮箱！' }]}>
                     <Input />
                 </Form.Item>
 
                 <Form.Item label="个人说明" name="self_description">
-                    <Input />
+                    <Input.TextArea rows={4} />
                 </Form.Item>
 
                 <Form.Item wrapperCol={{ offset: 4, span: 10 }}>

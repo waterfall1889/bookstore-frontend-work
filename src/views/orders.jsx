@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Empty, Space, message, Spin } from 'antd';
 import BasicLayout from '../components/layout';
 import OrderCard from '../components/order_card';
-import { fetchOrders } from '../service/OrderInitialService';
-import {getUserId} from "../utils/ID-Storage"; // ✅ 路径请改为你的实际文件路径
+import { fetchOrders } from '../service/OrderService';
+import { getUserId } from "../utils/ID-Storage";
+
 
 const { Title } = Typography;
 
@@ -12,37 +13,50 @@ const OrderPage = () => {
     const [loading, setLoading] = useState(true);
     const userId = getUserId();
 
-    useEffect(() => {
-        const loadOrders = async () => {
-            try {
-                const data = await fetchOrders(userId);
-                setOrders(data);
-            } catch (error) {
-                message.error(error.message || '订单加载失败');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        loadOrders();
-    }, [userId]);
-
-    const updateOrderStatus = (orderId, newStatus) => {
-        setOrders(prev =>
-            prev.map(order =>
-                order.id === orderId ? { ...order, status: newStatus } : order
-            )
-        );
-        message.success(`订单 ${orderId} 已更新为 ${newStatus}`);
-    };
-
-    const handleOrderAction = (actionType, orderId) => {
-        if (actionType === 'pay') {
-            updateOrderStatus(orderId, '运输中');
-        } else if (actionType === 'confirm') {
-            updateOrderStatus(orderId, '已完成');
+    const loadOrders = async () => {
+        try {
+            setLoading(true);
+            const data = await fetchOrders(getUserId());
+            setOrders(data);
+        } catch (error) {
+            message.error('获取订单列表失败：' + error.message);
+        } finally {
+            setLoading(false);
         }
     };
+
+    useEffect(() => {
+        loadOrders();
+    }, []);
+
+    const handleStatusUpdate = async (orderId, newStatus) => {
+        // 更新本地订单状态
+        setOrders(prevOrders => 
+            prevOrders.map(order => 
+                order.orderId === orderId 
+                    ? { ...order, status: newStatus }
+                    : order
+            )
+        );
+    };
+
+    if (loading) {
+        return (
+            <BasicLayout>
+                <div style={{ textAlign: 'center', padding: '50px' }}>
+                    <Spin size="large" />
+                </div>
+            </BasicLayout>
+        );
+    }
+
+    if (!orders || orders.length === 0) {
+        return (
+            <BasicLayout>
+                <Empty description="暂无订单" style={{ marginTop: 48 }} />
+            </BasicLayout>
+        );
+    }
 
     return (
         <BasicLayout>
@@ -51,23 +65,13 @@ const OrderPage = () => {
                     <Title level={3} style={{ margin: 0 }}>我的订单</Title>
                 </Space>
 
-                {loading ? (
-                    <Spin size="large" style={{ display: 'block', marginTop: 100 }} />
-                ) : orders.length === 0 ? (
-                    <Empty
-                        description="暂无订单记录"
-                        imageStyle={{ height: 120 }}
-                        style={{ marginTop: 48 }}
+                {orders.map(order => (
+                    <OrderCard 
+                        key={order.orderId} 
+                        order={order}
+                        onStatusUpdate={handleStatusUpdate}
                     />
-                ) : (
-                    orders.map(order => (
-                        <OrderCard
-                            key={order.id}
-                            order={order}
-                            onAction={handleOrderAction}
-                        />
-                    ))
-                )}
+                ))}
             </div>
         </BasicLayout>
     );

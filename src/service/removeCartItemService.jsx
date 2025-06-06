@@ -1,6 +1,6 @@
 export async function removeCartItem(userId, itemId) {
     try {
-        const response = await fetch(`http://localhost:8080/api/cartRemove/`+ userId,
+        const response = await fetch(`http://localhost:8080/api/remove`,
             {
             method: 'POST',
             headers: {
