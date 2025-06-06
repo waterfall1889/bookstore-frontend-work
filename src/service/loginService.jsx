@@ -1,30 +1,23 @@
-import {saveUserId} from "../utils/ID-Storage";
-
-export async function loginRequest(username, password) {
-    const requestData = { username, password };
-
+export async function login(username, password) {
     try {
-        const response = await fetch("http://localhost:8080/api/login", {
-            method: "POST",
+        const response = await fetch('http://localhost:8080/api/login', {
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(requestData),
+            body: JSON.stringify({ username, password })
         });
 
-        const data = await response.json();
+        const data = await response.json();  // ✅ 只读一次
 
-        if (!data.success) {
-            throw new Error("登录失败");
+        if (!response.ok) {
+            throw new Error(data.message || '登录失败');
         }
 
-        saveUserId(data.IDNumber);
-        console.log("登陆账号: ",data.IDNumber);
-        console.log("登录成功，返回数据:", data);
+        console.log('登录成功，返回数据:', data);
         return data;
-    }
-    catch (error) {
-        console.error("登录请求失败:", error.message);
+    } catch (error) {
+        console.error('登录过程发生错误:', error);
         throw error;
     }
 }

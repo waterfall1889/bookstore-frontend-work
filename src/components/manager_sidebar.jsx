@@ -3,23 +3,24 @@ import { Menu } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
     BookOutlined,
-    ShoppingCartOutlined,
     UnorderedListOutlined,
     UserOutlined,
-    BarChartOutlined
+    BarChartOutlined,
+    TeamOutlined
 } from '@ant-design/icons';
 import { clearUserInfo } from '../utils/ID-Storage';
 
-const Sidebar = () => {
+const ManagerSidebar = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
     // 根据当前路径设置选中项
     const selectedKey = (() => {
         if (location.pathname.startsWith('/profile')) return 'profile';
-        if (location.pathname.startsWith('/books')) return 'books';
-        if (location.pathname.startsWith('/cart')) return 'cart';
-        if (location.pathname.startsWith('/orders')) return 'orders';
+        if (location.pathname.startsWith('/manager/books')) return 'books';
+        if (location.pathname.startsWith('/manager/orders')) return 'orders';
+        if (location.pathname.startsWith('/manager/charts')) return 'charts';
+        if (location.pathname.startsWith('/manager/users')) return 'users';
         return '';
     })();
 
@@ -47,26 +48,26 @@ const Sidebar = () => {
         {
             key: 'books',
             icon: <BookOutlined />,
-            label: '图书列表',
-            onClick: () => { navigate('/books'); }
-        },
-        {
-            key: 'cart',
-            icon: <ShoppingCartOutlined />,
-            label: '我的购物车',
-            onClick: () => { navigate('/cart'); }
+            label: '图书管理',
+            onClick: () => { navigate('/manager/books'); }
         },
         {
             key: 'orders',
             icon: <UnorderedListOutlined />,
-            label: '我的订单',
-            onClick: () => { navigate('/orders'); }
+            label: '订单管理',
+            onClick: () => { navigate('/manager/orders'); }
         },
         {
             key: 'charts',
             icon: <BarChartOutlined />,
             label: '数据统计',
-            onClick: () => { navigate('/chart'); }
+            onClick: () => { navigate('/manager/charts'); }
+        },
+        {
+            key: 'users',
+            icon: <TeamOutlined />,
+            label: '用户管理',
+            onClick: () => { navigate('/manager/users'); }
         },
     ];
 
@@ -80,5 +81,4 @@ const Sidebar = () => {
     );
 };
 
-export default Sidebar;
-
+export default ManagerSidebar; 

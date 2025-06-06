@@ -10,6 +10,8 @@ import CartPage from "../views/cart";
 import ChartPage from "../views/charts";
 import OrderPage from "../views/orders";
 import SignPage from "../views/sign";
+import ManagerHomePage from "../views/manager/managerBasic";
+import ManagerUserPage from "../views/manager/userManage";
 
 export default function AppRouter() {
     return (
@@ -27,6 +29,9 @@ export default function AppRouter() {
                 <Route path="/orders" element={<OrderPage />} />
                 <Route path="/sign" element={<SignPage />} />
                 <Route path="/chart" element={<ChartPage />} />
+
+                <Route path="/manager/home" element={<ManagerHomePage />} />
+                <Route path="/manager/users" element={<ManagerUserPage />} />
             </Routes>
         </BrowserRouter>
     );

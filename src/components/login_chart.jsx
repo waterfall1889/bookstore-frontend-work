@@ -1,85 +1,95 @@
-import React from "react";
-import { Form, Input, Button, Checkbox, message } from "antd";
-import { loginRequest } from "../service/loginService";
-import {useNavigate} from "react-router-dom";
+import React, { useState } from 'react';
+import { Form, Input, Button, message } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../service/loginService';
+import { setUserId, setUserRole } from '../utils/ID-Storage';
 
-
-const LoginForm = ({ onLoginSuccess }) => {
-    const [form] = Form.useForm();
-    const navigator = useNavigate();
+const LoginChart = () => {
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const onFinish = async (values) => {
-        const { username, password } = values;
-
         try {
-            const result = await loginRequest(username, password);
-            onLoginSuccess(result);
-        }
-        catch (error) {
-            message.error("登录失败：" + error.message);  // 展示具体错误信息
-            alert("帐号或密码有误：" + error.message);
-        }
-    };
+            setLoading(true);
+            console.log('开始登录，参数:', values);
+            const response = await login(values);
+            console.log('登录响应:', response);
 
-    const onFinishFailed = (errorInfo) => {
-        console.log("表单验证失败:", errorInfo);
-    };
-
-    // 添加按钮点击事件处理函数
-    const handleClick = () => {
-        console.log("按钮被点击了！");
-        form.submit();  // 手动触发表单提交
+            if (response.loginStatus === 'success') {
+                // 存储用户ID和角色
+                setUserId(response.id);
+                setUserRole(response.status || 'BASIC'); // 默认为普通用户
+                
+                message.success(response.message || '登录成功');
+                console.log('登录成功，用户角色:', response.status || 'BASIC');
+                
+                // 根据角色跳转到不同页面
+                if (response.status === 'SUPER') {
+                    navigate('/manager/home');
+                } else {
+                    navigate('/books');
+                }
+            } else {
+                alert('登录失败！');
+            }
+        } catch (error) {
+            console.error('登录过程发生错误:', error);
+            alert('登录失败！');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <Form
-            form={form}  // 绑定表单实例
-            name="login"
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            labelCol={{ span: 6 }}
-            wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 400, margin: "0 auto" }}
-        >
-            <Form.Item
-                label="用户名"
-                name="username"
-                rules={[{ required: true, message: "请输入用户名" }]}
+        <div style={{ maxWidth: 300, margin: '0 auto' }}>
+            <Form
+                name="login"
+                onFinish={onFinish}
             >
-                <Input />
-            </Form.Item>
+                <Form.Item
+                    name="username"
+                    rules={[{ required: true, message: '请输入用户名' }]}
+                >
+                    <Input 
+                        prefix={<UserOutlined />} 
+                        placeholder="用户名" 
+                        size="large"
+                    />
+                </Form.Item>
 
-            <Form.Item
-                label="密码"
-                name="password"
-                rules={[{ required: true, message: "请输入密码" }]}
+                <Form.Item
+                    name="password"
+                    rules={[{ required: true, message: '请输入密码' }]}
+                >
+                    <Input.Password
+                        prefix={<LockOutlined />}
+                        placeholder="密码"
+                        size="large"
+                    />
+                </Form.Item>
+
+                <Form.Item>
+                    <Button 
+                        type="primary" 
+                        htmlType="submit" 
+                        loading={loading}
+                        style={{ width: '100%' }}
+                        size="large"
+                    >
+                        登录
+                    </Button>
+                </Form.Item>
+            </Form>
+            <Button 
+                type="link" 
+                onClick={() => navigate('/sign')}
+                style={{ width: '100%' }}
             >
-                <Input.Password />
-            </Form.Item>
-
-            <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
-                <Button
-                    type="primary"
-                    htmlType="button"  // 改为button类型
-                    block
-                    onClick={handleClick}  // 添加点击事件处理
-                >
-                    登录
-                </Button>
-            </Form.Item>
-
-            <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
-                <Button
-                    type="primary"
-                    htmlType="button"  // 改为button类型
-                    block
-                    onClick = {() =>navigator('/sign')} // 添加点击事件处理
-                >
-                    注册
-                </Button>
-            </Form.Item>
-        </Form>
+                还没有账号？立即注册
+            </Button>
+        </div>
     );
 };
 
-export default LoginForm;
+export default LoginChart;
