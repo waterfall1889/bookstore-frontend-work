@@ -4,7 +4,8 @@ import {
     BookOutlined,
     ShoppingCartOutlined,
     UnorderedListOutlined,
-    UserOutlined
+    UserOutlined,
+    BarChartOutlined
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {clearUserId} from "../utils/ID-Storage";
@@ -57,6 +58,12 @@ const Sidebar = () => {
             icon: <UnorderedListOutlined />,
             label: '我的订单',
             onClick: () => { navigate('/orders'); }
+        },
+        {
+            key: 'charts',
+            icon: <BarChartOutlined />,
+            label: '数据统计',
+            onClick: () => { navigate('/chart'); }
         },
     ];
 

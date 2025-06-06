@@ -7,6 +7,7 @@ import ProfileEditorPage from "../views/profile_editor";
 import BookPage from "../views/books";
 import BookDetailPage from "../views/book_info";
 import CartPage from "../views/cart";
+import ChartPage from "../views/charts";
 import OrderPage from "../views/orders";
 import SignPage from "../views/sign";
 
@@ -25,6 +26,7 @@ export default function AppRouter() {
                 <Route path="/cart" element={<CartPage />} />
                 <Route path="/orders" element={<OrderPage />} />
                 <Route path="/sign" element={<SignPage />} />
+                <Route path="/chart" element={<ChartPage />} />
             </Routes>
         </BrowserRouter>
     );

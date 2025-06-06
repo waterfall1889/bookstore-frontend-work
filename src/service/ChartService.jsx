@@ -1,15 +1,13 @@
-import {getUserId} from "../utils/ID-Storage";
-
-export async function fetchUserStatistics(username, startDate, endDate) {
+export async function fetchUserStatistics(Id, startDate, endDate) {
     try {
-        console.log('获取统计数据:', { getUserId, startDate, endDate });
+        console.log('获取统计数据:', { Id, startDate, endDate });
         const response = await fetch('http://localhost:8080/api/statistics/user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                getUserId,
+                Id,
                 startDate,
                 endDate
             })

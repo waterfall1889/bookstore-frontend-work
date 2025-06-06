@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Card, DatePicker, Space, Statistic, Row, Col, message, Spin } from 'antd';
+import React, { useState } from 'react';
+import { Card, DatePicker, Space, Statistic, Row, Col, message, Spin, Table } from 'antd';
 import { fetchUserStatistics } from '../service/ChartService';
 import BasicLayout from '../components/layout';
-import * as echarts from 'echarts';
 import { getUserId } from '../utils/ID-Storage';
 
 const { RangePicker } = DatePicker;
@@ -10,24 +9,6 @@ const { RangePicker } = DatePicker;
 const ChartPage = () => {
     const [loading, setLoading] = useState(false);
     const [statistics, setStatistics] = useState(null);
-
-    useEffect(() => {
-        // 初始化图表
-        const chartDom = document.getElementById('bookChart');
-        const myChart = echarts.init(chartDom);
-        
-        // 监听窗口大小变化，调整图表大小
-        window.addEventListener('resize', () => {
-            myChart.resize();
-        });
-
-        return () => {
-            myChart.dispose();
-            window.removeEventListener('resize', () => {
-                myChart.resize();
-            });
-        };
-    }, []);
 
     const handleDateRangeChange = async (dates) => {
         if (!dates || dates.length !== 2) {
@@ -43,7 +24,6 @@ const ChartPage = () => {
                 endDate.format('YYYY-MM-DD')
             );
             setStatistics(data);
-            updateChart(data);
         } catch (error) {
             message.error('获取统计数据失败：' + error.message);
         } finally {
@@ -51,63 +31,27 @@ const ChartPage = () => {
         }
     };
 
-    const updateChart = (data) => {
-        const chartDom = document.getElementById('bookChart');
-        const myChart = echarts.init(chartDom);
-
-        const option = {
-            title: {
-                text: '购书统计'
-            },
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'shadow'
-                }
-            },
-            legend: {
-                data: ['购买数量', '消费金额']
-            },
-            xAxis: {
-                type: 'category',
-                data: data.bookStatistics.map(item => item.bookName),
-                axisLabel: {
-                    interval: 0,
-                    rotate: 30
-                }
-            },
-            yAxis: [
-                {
-                    type: 'value',
-                    name: '数量',
-                    position: 'left'
-                },
-                {
-                    type: 'value',
-                    name: '金额',
-                    position: 'right',
-                    axisLabel: {
-                        formatter: '¥{value}'
-                    }
-                }
-            ],
-            series: [
-                {
-                    name: '购买数量',
-                    type: 'bar',
-                    data: data.bookStatistics.map(item => item.quantity)
-                },
-                {
-                    name: '消费金额',
-                    type: 'line',
-                    yAxisIndex: 1,
-                    data: data.bookStatistics.map(item => item.totalAmount)
-                }
-            ]
-        };
-
-        myChart.setOption(option);
-    };
+    const columns = [
+        {
+            title: '书名',
+            dataIndex: 'bookName',
+            key: 'bookName',
+        },
+        {
+            title: '购买数量',
+            dataIndex: 'quantity',
+            key: 'quantity',
+            sorter: (a, b) => b.quantity - a.quantity,
+            render: (text) => `${text}本`,
+        },
+        {
+            title: '消费金额',
+            dataIndex: 'totalAmount',
+            key: 'totalAmount',
+            sorter: (a, b) => b.totalAmount - a.totalAmount,
+            render: (text) => `¥${text.toFixed(2)}`,
+        }
+    ];
 
     return (
         <BasicLayout>
@@ -156,13 +100,12 @@ const ChartPage = () => {
                                     </Col>
                                 </Row>
 
-                                <div 
-                                    id="bookChart" 
-                                    style={{ 
-                                        width: '100%', 
-                                        height: '400px',
-                                        marginTop: '24px'
-                                    }}
+                                <Table 
+                                    columns={columns} 
+                                    dataSource={statistics.bookStatistics}
+                                    rowKey="bookName"
+                                    pagination={false}
+                                    style={{ marginTop: 24 }}
                                 />
                             </>
                         )}
