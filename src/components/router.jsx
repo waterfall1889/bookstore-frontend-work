@@ -8,6 +8,7 @@ import BookPage from "../views/books";
 import BookDetailPage from "../views/book_info";
 import CartPage from "../views/cart";
 import OrderPage from "../views/orders";
+import SignPage from "../views/sign";
 
 export default function AppRouter() {
     return (
@@ -23,6 +24,7 @@ export default function AppRouter() {
                 {/*:id 是一个动态参数，比如 /books/123 会传入 id = "123"*/}
                 <Route path="/cart" element={<CartPage />} />
                 <Route path="/orders" element={<OrderPage />} />
+                <Route path="/sign" element={<SignPage />} />
             </Routes>
         </BrowserRouter>
     );

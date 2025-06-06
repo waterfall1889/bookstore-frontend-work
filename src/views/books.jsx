@@ -34,10 +34,6 @@ export default function BookPage() {
                         </Col>
                     ))}
                 </Row>
-
-                <div style={{ textAlign: 'center', marginTop: 24 }}>
-                    <BookPagination />
-                </div>
             </div>
         </BasicLayout>
     );

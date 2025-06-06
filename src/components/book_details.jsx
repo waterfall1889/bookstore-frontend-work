@@ -90,7 +90,7 @@ export default function BookDetail() {
                     <Text strong>价格：</Text>
                     <Text type="danger" style={{ fontSize: '18px' }}>￥{Number(book.price).toFixed(2)}</Text>
                     <br /><br />
-                    <Text strong>存货数量：</Text><Text>{book.remain_number}</Text>
+                    <Text strong>存货数量：</Text><Text>{book.remainNumber}</Text>
                     <br /><br />
                     <Text strong>简介：</Text>
                     <Paragraph>{book.description}</Paragraph>

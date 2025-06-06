@@ -1,10 +1,12 @@
 import React from "react";
 import { Form, Input, Button, Checkbox, message } from "antd";
 import { loginRequest } from "../service/loginService";
+import {useNavigate} from "react-router-dom";
 
 
 const LoginForm = ({ onLoginSuccess }) => {
     const [form] = Form.useForm();
+    const navigator = useNavigate();
 
     const onFinish = async (values) => {
         const { username, password } = values;
@@ -55,10 +57,6 @@ const LoginForm = ({ onLoginSuccess }) => {
                 <Input.Password />
             </Form.Item>
 
-            <Form.Item name="remember" valuePropName="checked" label={null}>
-                <Checkbox>记住密码</Checkbox>
-            </Form.Item>
-
             <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
                 <Button
                     type="primary"
@@ -67,6 +65,17 @@ const LoginForm = ({ onLoginSuccess }) => {
                     onClick={handleClick}  // 添加点击事件处理
                 >
                     登录
+                </Button>
+            </Form.Item>
+
+            <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
+                <Button
+                    type="primary"
+                    htmlType="button"  // 改为button类型
+                    block
+                    onClick = {() =>navigator('/sign')} // 添加点击事件处理
+                >
+                    注册
                 </Button>
             </Form.Item>
         </Form>
