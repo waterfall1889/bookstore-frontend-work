@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Card, DatePicker, Space, Statistic, Row, Col, message, Spin, Table } from 'antd';
-import { fetchUserStatistics } from '../service/ChartService';
-import BasicLayout from '../components/layout';
-import { getUserId } from '../utils/ID-Storage';
-
+import {Card, DatePicker, Space, message, Spin, Table, Col, Statistic, Row} from 'antd';
+import {fetchAdminStatistics, fetchUserStatistics} from '../../service/ChartService';
+import { getUserId } from '../../utils/ID-Storage';
+import ManagerLayout from "../../components/manager_layout";
 const { RangePicker } = DatePicker;
 
-const ChartPage = () => {
+const ManagerChartPage = () => {
     const [loading, setLoading] = useState(false);
     const [statistics, setStatistics] = useState(null);
 
@@ -18,8 +17,7 @@ const ChartPage = () => {
         try {
             setLoading(true);
             const [startDate, endDate] = dates;
-            const data = await fetchUserStatistics(
-                getUserId(),
+            const data = await fetchAdminStatistics(
                 startDate.format('YYYY-MM-DD'),
                 endDate.format('YYYY-MM-DD')
             );
@@ -31,7 +29,7 @@ const ChartPage = () => {
         }
     };
 
-    const columns = [
+    const column1 = [
         {
             title: '书名',
             dataIndex: 'bookName',
@@ -45,7 +43,7 @@ const ChartPage = () => {
             render: (text) => `${text}本`,
         },
         {
-            title: '消费金额',
+            title: '总金额',
             dataIndex: 'totalAmount',
             key: 'totalAmount',
             sorter: (a, b) => b.totalAmount - a.totalAmount,
@@ -53,16 +51,32 @@ const ChartPage = () => {
         }
     ];
 
+    const column2 = [
+        {
+            title: '用户ID',
+            dataIndex: 'userId',
+            key: 'userId',
+        },
+
+        {
+            title: '消费金额',
+            dataIndex: 'totalAmount',
+            key: 'totalAmount',
+            sorter: (a, b) => b.totalAmount - a.totalAmount,
+            render: (text) => `¥${text.toFixed(2)}`,
+        }
+    ]
+
     return (
-        <BasicLayout>
+        <ManagerLayout>
             <div style={{ padding: '24px', maxWidth: 1200, margin: '0 auto' }}>
                 <Card title="购书统计" style={{ marginBottom: 24 }}>
                     <Space direction="vertical" size="large" style={{ width: '100%' }}>
-                        <RangePicker 
+                        <RangePicker
                             onChange={handleDateRangeChange}
                             style={{ width: 300 }}
                         />
-                        
+
                         {loading ? (
                             <div style={{ textAlign: 'center', padding: '50px' }}>
                                 <Spin size="large" />
@@ -82,7 +96,7 @@ const ChartPage = () => {
                                     <Col span={8}>
                                         <Card>
                                             <Statistic
-                                                title="总消费金额"
+                                                title="总金额"
                                                 value={statistics.totalAmount}
                                                 prefix="¥"
                                                 precision={2}
@@ -99,23 +113,27 @@ const ChartPage = () => {
                                         </Card>
                                     </Col>
                                 </Row>
-
-                                <Table 
-                                    columns={columns} 
+                                <Table
+                                    columns={column1}
                                     dataSource={statistics.bookStatistics}
                                     rowKey="bookName"
                                     pagination={false}
                                     style={{ marginTop: 24 }}
                                 />
-
-
+                                <Table
+                                    columns={column2}
+                                    dataSource={statistics.userStatistics}
+                                    rowKey="userId"
+                                    pagination={false}
+                                    style={{ marginTop: 24 }}
+                                />
                             </>
                         )}
                     </Space>
                 </Card>
             </div>
-        </BasicLayout>
+        </ManagerLayout>
     );
 };
 
-export default ChartPage; 
+export default ManagerChartPage;

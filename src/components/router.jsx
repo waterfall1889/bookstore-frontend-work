@@ -13,6 +13,7 @@ import SignPage from "../views/sign";
 import ManagerHomePage from "../views/manager/managerBasic";
 import ManagerUserPage from "../views/manager/userManage";
 import ManagerOrderPage from "../views/manager/orderManage";
+import ManagerChartPage from "../views/manager/chartsManage";
 
 export default function AppRouter() {
     return (
@@ -34,6 +35,7 @@ export default function AppRouter() {
                 <Route path="/manager/home" element={<ManagerHomePage />} />
                 <Route path="/manager/users" element={<ManagerUserPage />} />
                 <Route path="/manager/orders" element={<ManagerOrderPage />} />
+                <Route path="/manager/charts" element={<ManagerChartPage />} />
             </Routes>
         </BrowserRouter>
     );
