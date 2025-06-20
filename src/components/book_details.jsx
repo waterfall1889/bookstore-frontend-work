@@ -92,6 +92,10 @@ export default function BookDetail() {
                     <br /><br />
                     <Text strong>存货数量：</Text><Text>{book.remainNumber}</Text>
                     <br /><br />
+                    <Text strong>ISBN编号：</Text><Text>{book.isbn}</Text>
+                    <br /><br />
+                    <Text strong>出版社：</Text><Text>{book.publish}</Text>
+                    <br /><br />
                     <Text strong>简介：</Text>
                     <Paragraph>{book.description}</Paragraph>
                     <br />

@@ -105,6 +105,8 @@ const BookPage = () => {
                                             <p>作者：{book.author}</p>
                                             <p>价格：¥{book.price.toFixed(2)}</p>
                                             <p>库存：{book.remainNumber}</p>
+                                            <p>出版社：{book.publish}</p>
+                                            <p>ISBN：{book.isbn}</p>
                                         </div>
                                     }
                                 />

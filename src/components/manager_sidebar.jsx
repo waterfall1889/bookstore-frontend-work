@@ -31,11 +31,6 @@ const ManagerSidebar = () => {
             label: '个人中心',
             children: [
                 {
-                    key: 'profile',
-                    label: '个人资料',
-                    onClick: () => { navigate('/profile'); }
-                },
-                {
                     key: 'logout',
                     label: '退出登录',
                     onClick: () => { 

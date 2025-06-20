@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Avatar, Tag, Button, message, Space } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { getUserList, updateUserStatus } from '../service/UserService';
+import { getUserList, updateUserStatus } from '../../service/UserService';
 
 const UserManagement = () => {
     const [users, setUsers] = useState([]);

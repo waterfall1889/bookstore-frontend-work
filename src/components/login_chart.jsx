@@ -35,7 +35,7 @@ const LoginChart = () => {
             }
         } catch (error) {
             console.error('登录过程发生错误:', error);
-            alert('登录失败！');
+            alert('登录失败！'+error);
         } finally {
             setLoading(false);
         }
