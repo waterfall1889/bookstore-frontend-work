@@ -21,6 +21,7 @@ const ManagerSidebar = () => {
         if (location.pathname.startsWith('/manager/orders')) return 'orders';
         if (location.pathname.startsWith('/manager/charts')) return 'charts';
         if (location.pathname.startsWith('/manager/users')) return 'users';
+        if (location.pathname.startsWith('/manager/add')) return 'add';
         return '';
     })();
 
@@ -63,6 +64,12 @@ const ManagerSidebar = () => {
             icon: <TeamOutlined />,
             label: '用户管理',
             onClick: () => { navigate('/manager/users'); }
+        },
+        {
+            key: 'add',
+            icon: <BookOutlined />,
+            label: '添加书籍',
+            onClick: () => { navigate('/manager/add'); }
         },
     ];
 

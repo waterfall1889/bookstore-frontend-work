@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Input, Button, message, Spin } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { fetchAllBooks } from '../service/bookcardService';
-import { searchBooks } from '../service/SearchService';
-import BasicLayout from '../components/layout';
-import Book_card from '../components/book_card';
+import { fetchAllBooks } from '../../service/bookcardService';
+import { searchBooks } from '../../service/SearchService';
+import ManagerLayout from "../../components/manager_layout";
+import Book_card from '../../components/book_card';
 
 const { Search } = Input;
 
-const BookPage = () => {
+const ManagerBookPage = () => {
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchLoading, setSearchLoading] = useState(false);
@@ -60,16 +60,16 @@ const BookPage = () => {
 
     if (loading) {
         return (
-            <BasicLayout>
+            <ManagerLayout>
                 <div style={{ textAlign: 'center', padding: '50px' }}>
                     <Spin size="large" />
                 </div>
-            </BasicLayout>
+            </ManagerLayout>
         );
     }
 
     return (
-        <BasicLayout>
+        <ManagerLayout>
             <div style={{ padding: '24px', maxWidth: 1200, margin: '0 auto' }}>
                 <div style={{ marginBottom: 24 }}>
                     <Search
@@ -85,13 +85,13 @@ const BookPage = () => {
                 <Row gutter={[24, 24]} justify="start">
                     {books.map(book => (
                         <Col xs={24} sm={12} md={8} lg={6} key={book.itemId}>
-                            <Book_card book={book} EditButton={false}/>
+                            <Book_card book={book} showDetailButton={false} />
                         </Col>
                     ))}
                 </Row>
             </div>
-        </BasicLayout>
+        </ManagerLayout>
     );
 };
 
-export default BookPage;
+export default ManagerBookPage;

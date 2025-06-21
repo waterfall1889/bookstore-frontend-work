@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {Card, DatePicker, Space, message, Spin, Table, Col, Statistic, Row} from 'antd';
-import {fetchAdminStatistics, fetchUserStatistics} from '../../service/ChartService';
-import { getUserId } from '../../utils/ID-Storage';
+import {fetchAdminStatistics} from '../../service/ChartService';
 import ManagerLayout from "../../components/manager_layout";
 const { RangePicker } = DatePicker;
 

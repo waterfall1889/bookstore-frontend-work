@@ -14,6 +14,9 @@ import ManagerHomePage from "../views/manager/managerBasic";
 import ManagerUserPage from "../views/manager/userManage";
 import ManagerOrderPage from "../views/manager/orderManage";
 import ManagerChartPage from "../views/manager/chartsManage";
+import ManagerBookPage from "../views/manager/bookManage";
+import AddBookPage from "../views/manager/addBook";
+import BooksEdit from "../views/manager/booksEdit";
 
 export default function AppRouter() {
     return (
@@ -36,6 +39,9 @@ export default function AppRouter() {
                 <Route path="/manager/users" element={<ManagerUserPage />} />
                 <Route path="/manager/orders" element={<ManagerOrderPage />} />
                 <Route path="/manager/charts" element={<ManagerChartPage />} />
+                <Route path="/manager/books" element={<ManagerBookPage />} />
+                <Route path="/manager/add" element={<AddBookPage />} />
+                <Route path="/booksEdit/:id" element={<BooksEdit />} />
             </Routes>
         </BrowserRouter>
     );
