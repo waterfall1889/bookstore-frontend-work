@@ -23,7 +23,12 @@ const RegisterForm = () => {
             message.success('注册成功！');
             navigate('/login');
         } catch (error) {
-            message.error(error.message || '注册失败，请重试');
+            // 检查是否用户名已存在
+            if (error.message && error.message.includes('用户名已存在')) {
+                alert('用户名已存在，请更换用户名！');
+            } else {
+                message.error(error.message || '注册失败，请重试');
+            }
         } finally {
             setLoading(false);
         }
