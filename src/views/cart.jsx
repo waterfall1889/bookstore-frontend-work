@@ -8,6 +8,7 @@ import BasicLayout from "../components/layout";
 import {removeCartItem} from "../service/removeCartItemService";
 import {useNavigate} from "react-router-dom";
 import {Checkout} from "../service/CheckoutService";
+import webSocketService from "../service/WebSocketService";
 
 const { Title, Text } = Typography;
 
@@ -30,6 +31,25 @@ const CartPage = () => {
         };
 
         loadCartData();
+
+        // 建立WebSocket连接
+        const userId = getUserId();
+        if (userId) {
+            console.log('准备建立WebSocket连接...');
+            webSocketService.connect(userId)
+                .then(() => {
+                    console.log('WebSocket连接成功');
+                })
+                .catch((error) => {
+                    console.error('WebSocket连接失败:', error);
+                });
+        }
+
+        // 组件卸载时断开WebSocket
+        return () => {
+            console.log('组件卸载，断开WebSocket连接');
+            webSocketService.disconnect();
+        };
     }, []);
 
     if (loading) {
@@ -70,13 +90,48 @@ const CartPage = () => {
     const handleCheckout = async () => {
         try {
             setCheckoutLoading(true);
-            await Checkout(getUserId());
-            const data = await fetchCart(getUserId());
-            setCartData(data);
-            message.success('结算成功！即将跳转前往订单页面...');
-            navigate('/orders');
+            
+            // 注册WebSocket订单结果处理器
+            webSocketService.on('order_result', (data, message, timestamp) => {
+                console.log('收到订单处理结果:', data);
+                
+                const { orderId, status, message: orderMessage } = data;
+                
+                const statusText = status === 'WFP' ? '待支付' : 
+                                  status === 'IDL' ? '运输中' : 
+                                  status === 'FIN' ? '已完成' : status;
+
+                // 显示订单创建成功的提示
+                alert(`订单创建成功！\n订单号: ${orderId}\n订单状态: ${statusText}\n${orderMessage}\n\n即将跳转到订单页面...`);
+
+                // 刷新购物车
+                fetchCart(getUserId()).then(data => setCartData(data));
+                
+                // 跳转到订单页面
+                setTimeout(() => {
+                    navigate('/orders');
+                }, 1000);
+            });
+
+            // 调用结算接口
+            const checkoutResponse = await Checkout(getUserId());
+            console.log('结算响应:', checkoutResponse);
+            
+            // 获取新创建的订单ID
+            const orderId = checkoutResponse.orderId || checkoutResponse.id;
+            
+            if (!orderId) {
+                throw new Error('未能获取订单ID');
+            }
+
+            // 显示订单创建中的提示
+            alert(`订单创建中...\n订单号: ${orderId}\n正在处理您的订单，请稍候...\n\n订单结果将通过WebSocket实时推送`);
+
         } catch (error) {
-            message.error('结算失败：' + error.message);
+            console.error('结算失败:', error);
+            
+            // 显示错误信息
+            alert(`结算失败\n${error.message || '订单创建失败，请重试'}`);
         } finally {
             setCheckoutLoading(false);
         }

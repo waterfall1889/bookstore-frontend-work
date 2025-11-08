@@ -17,6 +17,7 @@ import ManagerChartPage from "../views/manager/chartsManage";
 import ManagerBookPage from "../views/manager/bookManage";
 import AddBookPage from "../views/manager/addBook";
 import BooksEdit from "../views/manager/booksEdit";
+import AuthorLookupPage from "../views/author_lookup";
 
 export default function AppRouter() {
     return (
@@ -34,6 +35,7 @@ export default function AppRouter() {
                 <Route path="/orders" element={<OrderPage />} />
                 <Route path="/sign" element={<SignPage />} />
                 <Route path="/chart" element={<ChartPage />} />
+                <Route path="/author-lookup" element={<AuthorLookupPage />} />
 
                 <Route path="/manager/home" element={<ManagerHomePage />} />
                 <Route path="/manager/users" element={<ManagerUserPage />} />

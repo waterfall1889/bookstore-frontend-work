@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu } from 'antd';
+import { Menu, message } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
     BookOutlined,
@@ -8,7 +8,8 @@ import {
     BarChartOutlined,
     TeamOutlined
 } from '@ant-design/icons';
-import { clearUserInfo } from '../utils/ID-Storage';
+import { clearUserInfo, getUserId } from '../utils/ID-Storage';
+import { logout } from '../service/logoutService';
 
 const ManagerSidebar = () => {
     const navigate = useNavigate();
@@ -25,6 +26,42 @@ const ManagerSidebar = () => {
         return '';
     })();
 
+    const handleLogout = async () => {
+        try {
+            const userId = getUserId();
+            if (!userId) {
+                message.error('用户信息获取失败');
+                clearUserInfo();
+                navigate('/');
+                return;
+            }
+
+            const response = await logout(userId);
+
+            // 显示登出成功信息和会话时长
+            message.success(
+                `${response.message}，本次会话时长：${response.sessionTimeFormatted}`,
+                5 // 显示5秒
+            );
+
+            console.log('会话时长信息:', {
+                duration: response.sessionDuration,
+                minutes: response.sessionMinutes,
+                seconds: response.sessionSeconds,
+                formatted: response.sessionTimeFormatted
+            });
+
+            clearUserInfo();
+            navigate('/');
+        } catch (error) {
+            console.error('登出失败:', error);
+            message.error('登出失败：' + error.message);
+            // 即使登出失败，也清除本地信息
+            clearUserInfo();
+            navigate('/');
+        }
+    };
+
     const sideMenuItems = [
         {
             key: 'sub1',
@@ -34,10 +71,7 @@ const ManagerSidebar = () => {
                 {
                     key: 'logout',
                     label: '退出登录',
-                    onClick: () => { 
-                        clearUserInfo();
-                        navigate('/');
-                    }
+                    onClick: handleLogout
                 }
             ]
         },
@@ -83,4 +117,4 @@ const ManagerSidebar = () => {
     );
 };
 
-export default ManagerSidebar; 
+export default ManagerSidebar;

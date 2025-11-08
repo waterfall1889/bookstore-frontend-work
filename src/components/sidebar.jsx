@@ -6,9 +6,11 @@ import {
     ShoppingCartOutlined,
     UnorderedListOutlined,
     UserOutlined,
-    BarChartOutlined
+    BarChartOutlined,
+    ApiOutlined
 } from '@ant-design/icons';
-import { clearUserInfo } from '../utils/ID-Storage';
+import { clearUserInfo, getUserId } from '../utils/ID-Storage';
+import { logout } from '../service/logoutService';
 
 const Sidebar = () => {
     const navigate = useNavigate();
@@ -20,8 +22,42 @@ const Sidebar = () => {
         if (location.pathname.startsWith('/books')) return 'books';
         if (location.pathname.startsWith('/cart')) return 'cart';
         if (location.pathname.startsWith('/orders')) return 'orders';
+        if (location.pathname.startsWith('/author-lookup')) return 'authorLookup';
         return '';
     })();
+
+    const handleLogout = async () => {
+        try {
+            const userId = getUserId();
+            if (!userId) {
+                alert('用户信息获取失败');
+                clearUserInfo();
+                navigate('/');
+                return;
+            }
+
+            const response = await logout(userId);
+            
+            // 使用 alert 显示会话时长信息
+            alert(`${response.message}\n本次会话时长：${response.sessionTimeFormatted}`);
+            
+            console.log('会话时长信息:', {
+                duration: response.sessionDuration,
+                minutes: response.sessionMinutes,
+                seconds: response.sessionSeconds,
+                formatted: response.sessionTimeFormatted
+            });
+
+            clearUserInfo();
+            navigate('/');
+        } catch (error) {
+            console.error('登出失败:', error);
+            alert('登出失败：' + error.message);
+            // 即使登出失败，也清除本地信息
+            clearUserInfo();
+            navigate('/');
+        }
+    };
 
     const sideMenuItems = [
         {
@@ -37,10 +73,19 @@ const Sidebar = () => {
                 {
                     key: 'logout',
                     label: '退出登录',
-                    onClick: () => { 
-                        clearUserInfo();
-                        navigate('/');
-                    }
+                    onClick: handleLogout
+                }
+            ]
+        },
+        {
+            key: 'microservices',
+            icon: <ApiOutlined />,
+            label: '微服务体验',
+            children: [
+                {
+                    key: 'authorLookup',
+                    label: '作者查询',
+                    onClick: () => { navigate('/author-lookup'); }
                 }
             ]
         },
@@ -74,6 +119,7 @@ const Sidebar = () => {
         <Menu
             mode="inline"
             selectedKeys={[selectedKey]}
+            defaultOpenKeys={['sub1', 'microservices']}
             style={{ height: '100%', borderRight: 0 }}
             items={sideMenuItems}
         />
@@ -81,4 +127,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
