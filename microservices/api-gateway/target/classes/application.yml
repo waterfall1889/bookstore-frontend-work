@@ -16,6 +16,13 @@ spring:
           filters:
             - StripPrefix=2
             - PrefixPath=/api
+        - id: function-service
+          uri: lb://functionService
+          predicates:
+            - Path=/api/function-service/**
+          filters:
+            - StripPrefix=2
+            - PrefixPath=/orderLineTotal
 
 eureka:
   client:
