@@ -19,12 +19,24 @@ const OrderPage = () => {
         bookName: ''
     });
 
-    const calculateTotalAmount = (items) => {
-        if (!items || !Array.isArray(items)) return 0;
-        return items.reduce((total, item) => {
-            const itemTotal = (item.price || 0) * (item.counts || 0);
-            return total + itemTotal;
-        }, 0);
+    const getItemTotal = (item) => {
+        if (!item) return 0;
+        if (item.lineTotal !== undefined && item.lineTotal !== null) {
+            const value = Number(item.lineTotal);
+            return Number.isNaN(value) ? 0 : value;
+        }
+        return (item.price || 0) * (item.counts || 0);
+    };
+
+    const calculateTotalAmount = (order) => {
+        if (order?.orderTotal !== undefined && order?.orderTotal !== null) {
+            const value = Number(order.orderTotal);
+            if (!Number.isNaN(value)) {
+                return value;
+            }
+        }
+        if (!order?.items || !Array.isArray(order.items)) return 0;
+        return order.items.reduce((total, item) => total + getItemTotal(item), 0);
     };
 
     const loadOrders = async () => {
@@ -162,11 +174,14 @@ const OrderPage = () => {
             key: 'items',
             render: (items) => (
                 <div>
-                    {items?.map((item, index) => (
-                        <div key={index}>
-                            {item.itemName} x {item.counts} (¥{item.price.toFixed(2)})
-                        </div>
-                    ))}
+                    {items?.map((item, index) => {
+                        const itemTotal = getItemTotal(item);
+                        return (
+                            <div key={index}>
+                                {item.itemName} x {item.counts} (¥{Number(item.price || 0).toFixed(2)}) - 小计：¥{itemTotal.toFixed(2)}
+                            </div>
+                        );
+                    })}
                 </div>
             ),
         },
@@ -174,10 +189,10 @@ const OrderPage = () => {
             title: '总金额',
             key: 'totalAmount',
             render: (_, record) => {
-                const total = calculateTotalAmount(record.items);
+                const total = calculateTotalAmount(record);
                 return `¥${total.toFixed(2)}`;
             },
-            sorter: (a, b) => calculateTotalAmount(a.items) - calculateTotalAmount(b.items),
+            sorter: (a, b) => calculateTotalAmount(a) - calculateTotalAmount(b),
         },
         {
             title: '操作',
