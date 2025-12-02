@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { Card, Form, Input, InputNumber, Button, Upload, message, Modal, Typography } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Card, Form, Input, InputNumber, Button, Upload, message, Modal, Typography, Select, Tag, Space, Spin } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { addBook } from '../../service/addBookService';
 import { uploadImage } from '../../service/uploadImageService';
+import { getAllTags, addTagsToBook } from '../../service/BookTagService';
 
 const { Title, Text } = Typography;
 const { TextArea } = Input;
+const { Option } = Select;
 
 const AddBookCard = () => {
     const [form] = Form.useForm();
@@ -13,6 +15,36 @@ const AddBookCard = () => {
     const [submitting, setSubmitting] = useState(false);
     const [jsonPreviewVisible, setJsonPreviewVisible] = useState(false);
     const [jsonData, setJsonData] = useState('');
+    const [selectedTags, setSelectedTags] = useState([]);
+    const [allTags, setAllTags] = useState([]);
+    const [tagsLoading, setTagsLoading] = useState(false);
+
+    useEffect(() => {
+        loadAllTags();
+    }, []);
+
+    const loadAllTags = async () => {
+        try {
+            setTagsLoading(true);
+            const tags = await getAllTags();
+            setAllTags(tags || []);
+        } catch (error) {
+            console.error('加载标签列表失败:', error);
+            setAllTags([]);
+        } finally {
+            setTagsLoading(false);
+        }
+    };
+
+    const handleTagSelect = (tagName) => {
+        if (tagName && !selectedTags.includes(tagName)) {
+            setSelectedTags([...selectedTags, tagName]);
+        }
+    };
+
+    const handleTagRemove = (tagName) => {
+        setSelectedTags(selectedTags.filter(t => t !== tagName));
+    };
 
     const handleImageUpload = (file) => {
         const isImage = file.type.startsWith('image/');
@@ -83,9 +115,23 @@ const AddBookCard = () => {
             await addBook(bookData);
             message.destroy();
             
+            // 如果选择了标签，为图书添加标签
+            if (selectedTags.length > 0) {
+                try {
+                    message.loading('正在添加标签...', 0);
+                    await addTagsToBook(bookData.itemId, selectedTags);
+                    message.destroy();
+                } catch (error) {
+                    message.destroy();
+                    console.error('添加标签失败:', error);
+                    message.warning('图书添加成功，但标签添加失败：' + error.message);
+                }
+            }
+            
             message.success('图书添加成功！');
             form.resetFields();
             setCoverImage(null);
+            setSelectedTags([]);
             
         } catch (error) {
             message.destroy();
@@ -249,6 +295,49 @@ const AddBookCard = () => {
                                 </div>
                             )}
                         </Upload>
+                    </Form.Item>
+
+                    {/* 标签选择 */}
+                    <Form.Item label="图书标签">
+                        <div style={{ marginBottom: 16 }}>
+                            <Space wrap>
+                                {selectedTags.map(tag => (
+                                    <Tag
+                                        key={tag}
+                                        closable
+                                        onClose={() => handleTagRemove(tag)}
+                                        color="blue"
+                                        style={{ fontSize: '14px', padding: '4px 12px' }}
+                                    >
+                                        {tag}
+                                    </Tag>
+                                ))}
+                            </Space>
+                        </div>
+                        <Select
+                            placeholder="选择标签"
+                            style={{ width: '100%' }}
+                            loading={tagsLoading}
+                            showSearch
+                            filterOption={(input, option) =>
+                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                            }
+                            onSelect={handleTagSelect}
+                            notFoundContent={tagsLoading ? <Spin size="small" /> : '无可用标签'}
+                        >
+                            {allTags
+                                .filter(tag => !selectedTags.includes(tag.tagName))
+                                .map(tag => (
+                                    <Option key={tag.tagId} value={tag.tagName}>
+                                        {tag.tagName}
+                                    </Option>
+                                ))}
+                        </Select>
+                        <div style={{ marginTop: 8 }}>
+                            <Text type="secondary">
+                                提示：选择标签后，图书添加成功时会自动关联这些标签
+                            </Text>
+                        </div>
                     </Form.Item>
 
                     <Form.Item>

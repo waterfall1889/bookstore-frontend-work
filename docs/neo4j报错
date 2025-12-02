@@ -1,0 +1,393 @@
+2025-11-30 19:39:02.371 [INFO] [o.c.demo.config.Neo4jConfig] - ========== Neo4j数据库配置 ==========
+2025-11-30 19:39:02.371 [INFO] [o.c.demo.config.Neo4jConfig] - 配置Neo4j数据库选择提供者，使用数据库: booktag
+2025-11-30 19:39:02.371 [INFO] [o.c.demo.config.Neo4jConfig] - =====================================
+2025-11-30 19:39:02.493 [INFO] [o.c.demo.config.Neo4jConfig] - 配置Neo4j事务管理器，使用数据库: booktag
+2025-11-30 19:39:02.725 [INFO] [o.s.d.j.r.query.QueryEnhancerFactory] - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-30 19:39:03.588 [WARN] [o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-30 19:39:04.044 [INFO] [o.s.b.a.e.web.EndpointLinksResolver] - Exposing 1 endpoint beneath base path '/actuator'
+2025-11-30 19:39:04.105 [INFO] [o.s.b.w.e.tomcat.TomcatWebServer] - Tomcat started on port 8080 (http) with context path '/'
+2025-11-30 19:39:04.113 [INFO] [org.controllers.TestWebApplication] - Started TestWebApplication in 5.57 seconds (process running for 5.986)
+2025-11-30 19:39:04.332 [INFO] [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-30 19:39:04.332 [INFO] [o.s.web.servlet.DispatcherServlet] - Initializing Servlet 'dispatcherServlet'
+2025-11-30 19:39:04.334 [INFO] [o.s.web.servlet.DispatcherServlet] - Completed initialization in 2 ms
+2025-11-30 19:39:06.129 [INFO] [o.c.demo.config.TagInitializer] - 开始初始化标签关系图...
+2025-11-30 19:39:06.130 [INFO] [o.c.demo.config.TagInitializer] - 开始初始化标签关系图...
+2025-11-30 19:39:06.130 [INFO] [o.c.demo.service.Neo4jTagService] - 开始初始化标签关系图...
+2025-11-30 19:39:06.130 [INFO] [o.c.demo.service.Neo4jTagService] - 检查并清理重复标签...
+2025-11-30 19:39:06.130 [INFO] [o.c.demo.service.Neo4jTagService] - 开始初始化标签关系图...
+2025-11-30 19:39:06.133 [INFO] [o.c.demo.service.Neo4jTagService] - 检查并清理重复标签...
+2025-11-30 19:39:06.224 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (tagNode:`Tag`) WITH collect(id(tagNode)) AS __sn__ RETURN __sn__
+	                                   ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.224 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (tagNode:`Tag`) WITH collect(id(tagNode)) AS __sn__ RETURN __sn__
+	                                   ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.242 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (tagNode:`Tag`) OPTIONAL MATCH (tagNode)-[__sr__:`SUBCATEGORY_OF`]->(__srn__:`Tag`) WITH collect(id(tagNode)) AS __sn__, collect(id(__srn__)) AS __srn__, collect(id(__sr__)) AS __sr__ RETURN __sn__, __srn__, __sr__
+	                                                                                                       ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.242 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (tagNode:`Tag`) OPTIONAL MATCH (tagNode)-[__sr__:`SUBCATEGORY_OF`]->(__srn__:`Tag`) WITH collect(id(tagNode)) AS __sn__, collect(id(__srn__)) AS __srn__, collect(id(__sr__)) AS __sr__ RETURN __sn__, __srn__, __sr__
+	                                                                                                       ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.242 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (tagNode:`Tag`) OPTIONAL MATCH (tagNode)-[__sr__:`SUBCATEGORY_OF`]->(__srn__:`Tag`) WITH collect(id(tagNode)) AS __sn__, collect(id(__srn__)) AS __srn__, collect(id(__sr__)) AS __sr__ RETURN __sn__, __srn__, __sr__
+	                                                                                                                                       ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.242 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (tagNode:`Tag`) OPTIONAL MATCH (tagNode)-[__sr__:`SUBCATEGORY_OF`]->(__srn__:`Tag`) WITH collect(id(tagNode)) AS __sn__, collect(id(__srn__)) AS __srn__, collect(id(__sr__)) AS __sr__ RETURN __sn__, __srn__, __sr__
+	                                                                                                                                       ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.242 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (tagNode:`Tag`) OPTIONAL MATCH (tagNode)-[__sr__:`SUBCATEGORY_OF`]->(__srn__:`Tag`) WITH collect(id(tagNode)) AS __sn__, collect(id(__srn__)) AS __srn__, collect(id(__sr__)) AS __sr__ RETURN __sn__, __srn__, __sr__
+	                                                                                                                                                                        ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.242 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (tagNode:`Tag`) OPTIONAL MATCH (tagNode)-[__sr__:`SUBCATEGORY_OF`]->(__srn__:`Tag`) WITH collect(id(tagNode)) AS __sn__, collect(id(__srn__)) AS __srn__, collect(id(__sr__)) AS __sr__ RETURN __sn__, __srn__, __sr__
+	                                                                                                                                                                        ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.242 [WARN] [o.s.data.neo4j.cypher.unrecognized] - Neo.ClientNotification.Statement.UnknownRelationshipTypeWarning: The provided relationship type is not in the database.
+	MATCH (tagNode:`Tag`) OPTIONAL MATCH (tagNode)-[__sr__:`SUBCATEGORY_OF`]->(__srn__:`Tag`) WITH collect(id(tagNode)) AS __sn__, collect(id(__srn__)) AS __srn__, collect(id(__sr__)) AS __sr__ RETURN __sn__, __srn__, __sr__
+	                                                       ^
+One of the relationship types in your query is not available in the database, make sure you didn't misspell it or that the label is available when you run this statement in your application (the missing relationship type is: SUBCATEGORY_OF)
+2025-11-30 19:39:06.242 [WARN] [o.s.data.neo4j.cypher.unrecognized] - Neo.ClientNotification.Statement.UnknownRelationshipTypeWarning: The provided relationship type is not in the database.
+	MATCH (tagNode:`Tag`) OPTIONAL MATCH (tagNode)-[__sr__:`SUBCATEGORY_OF`]->(__srn__:`Tag`) WITH collect(id(tagNode)) AS __sn__, collect(id(__srn__)) AS __srn__, collect(id(__sr__)) AS __sr__ RETURN __sn__, __srn__, __sr__
+	                                                       ^
+One of the relationship types in your query is not available in the database, make sure you didn't misspell it or that the label is available when you run this statement in your application (the missing relationship type is: SUBCATEGORY_OF)
+2025-11-30 19:39:06.309 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (tagNode:`Tag`) OPTIONAL MATCH (tagNode)<-[__sr__:`SUBCATEGORY_OF`]-(__srn__:`Tag`) WITH collect(id(tagNode)) AS __sn__, collect(id(__srn__)) AS __srn__, collect(id(__sr__)) AS __sr__ RETURN __sn__, __srn__, __sr__
+	                                                                                                       ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.309 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (tagNode:`Tag`) OPTIONAL MATCH (tagNode)<-[__sr__:`SUBCATEGORY_OF`]-(__srn__:`Tag`) WITH collect(id(tagNode)) AS __sn__, collect(id(__srn__)) AS __srn__, collect(id(__sr__)) AS __sr__ RETURN __sn__, __srn__, __sr__
+	                                                                                                                                       ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.309 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (tagNode:`Tag`) OPTIONAL MATCH (tagNode)<-[__sr__:`SUBCATEGORY_OF`]-(__srn__:`Tag`) WITH collect(id(tagNode)) AS __sn__, collect(id(__srn__)) AS __srn__, collect(id(__sr__)) AS __sr__ RETURN __sn__, __srn__, __sr__
+	                                                                                                                                                                        ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.309 [WARN] [o.s.data.neo4j.cypher.unrecognized] - Neo.ClientNotification.Statement.UnknownRelationshipTypeWarning: The provided relationship type is not in the database.
+	MATCH (tagNode:`Tag`) OPTIONAL MATCH (tagNode)<-[__sr__:`SUBCATEGORY_OF`]-(__srn__:`Tag`) WITH collect(id(tagNode)) AS __sn__, collect(id(__srn__)) AS __srn__, collect(id(__sr__)) AS __sr__ RETURN __sn__, __srn__, __sr__
+	                                                        ^
+One of the relationship types in your query is not available in the database, make sure you didn't misspell it or that the label is available when you run this statement in your application (the missing relationship type is: SUBCATEGORY_OF)
+2025-11-30 19:39:06.330 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (tagNode:`Tag`) OPTIONAL MATCH (tagNode)<-[__sr__:`SUBCATEGORY_OF`]-(__srn__:`Tag`) WITH collect(id(tagNode)) AS __sn__, collect(id(__srn__)) AS __srn__, collect(id(__sr__)) AS __sr__ RETURN __sn__, __srn__, __sr__
+	                                                                                                       ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.331 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (tagNode:`Tag`) OPTIONAL MATCH (tagNode)<-[__sr__:`SUBCATEGORY_OF`]-(__srn__:`Tag`) WITH collect(id(tagNode)) AS __sn__, collect(id(__srn__)) AS __srn__, collect(id(__sr__)) AS __sr__ RETURN __sn__, __srn__, __sr__
+	                                                                                                                                       ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.331 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (tagNode:`Tag`) OPTIONAL MATCH (tagNode)<-[__sr__:`SUBCATEGORY_OF`]-(__srn__:`Tag`) WITH collect(id(tagNode)) AS __sn__, collect(id(__srn__)) AS __srn__, collect(id(__sr__)) AS __sr__ RETURN __sn__, __srn__, __sr__
+	                                                                                                                                                                        ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.331 [WARN] [o.s.data.neo4j.cypher.unrecognized] - Neo.ClientNotification.Statement.UnknownRelationshipTypeWarning: The provided relationship type is not in the database.
+	MATCH (tagNode:`Tag`) OPTIONAL MATCH (tagNode)<-[__sr__:`SUBCATEGORY_OF`]-(__srn__:`Tag`) WITH collect(id(tagNode)) AS __sn__, collect(id(__srn__)) AS __srn__, collect(id(__sr__)) AS __sr__ RETURN __sn__, __srn__, __sr__
+	                                                        ^
+One of the relationship types in your query is not available in the database, make sure you didn't misspell it or that the label is available when you run this statement in your application (the missing relationship type is: SUBCATEGORY_OF)
+2025-11-30 19:39:06.480 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (rootNodeIds:`Tag`) WHERE id(rootNodeIds) IN $rootNodeIds WITH collect(rootNodeIds) AS n OPTIONAL MATCH ()-[relationshipIds]-() WHERE id(relationshipIds) IN $relationshipIds WITH n, collect(DISTINCT relationshipIds) AS __sr__ OPTIONAL MATCH (relatedNodeIds) WHERE id(relatedNodeIds) IN $relatedNodeIds WITH n, __sr__ AS __sr__, collect(DISTINCT relatedNodeIds) AS __srn__ UNWIND n AS rootNodeIds WITH rootNodeIds AS tagNode, __sr__, __srn__ RETURN tagNode AS __sn__, __sr__, __srn__
+	                                ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.480 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (rootNodeIds:`Tag`) WHERE id(rootNodeIds) IN $rootNodeIds WITH collect(rootNodeIds) AS n OPTIONAL MATCH ()-[relationshipIds]-() WHERE id(relationshipIds) IN $relationshipIds WITH n, collect(DISTINCT relationshipIds) AS __sr__ OPTIONAL MATCH (relatedNodeIds) WHERE id(relatedNodeIds) IN $relatedNodeIds WITH n, __sr__ AS __sr__, collect(DISTINCT relatedNodeIds) AS __srn__ UNWIND n AS rootNodeIds WITH rootNodeIds AS tagNode, __sr__, __srn__ RETURN tagNode AS __sn__, __sr__, __srn__
+	                                                                                                                                            ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.480 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (rootNodeIds:`Tag`) WHERE id(rootNodeIds) IN $rootNodeIds WITH collect(rootNodeIds) AS n OPTIONAL MATCH ()-[relationshipIds]-() WHERE id(relationshipIds) IN $relationshipIds WITH n, collect(DISTINCT relationshipIds) AS __sr__ OPTIONAL MATCH (relatedNodeIds) WHERE id(relatedNodeIds) IN $relatedNodeIds WITH n, __sr__ AS __sr__, collect(DISTINCT relatedNodeIds) AS __srn__ UNWIND n AS rootNodeIds WITH rootNodeIds AS tagNode, __sr__, __srn__ RETURN tagNode AS __sn__, __sr__, __srn__
+	                                                                                                                                                                                                                                                                              ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.480 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (rootNodeIds:`Tag`) WHERE id(rootNodeIds) IN $rootNodeIds WITH collect(rootNodeIds) AS n OPTIONAL MATCH ()-[relationshipIds]-() WHERE id(relationshipIds) IN $relationshipIds WITH n, collect(DISTINCT relationshipIds) AS __sr__ OPTIONAL MATCH (relatedNodeIds) WHERE id(relatedNodeIds) IN $relatedNodeIds WITH n, __sr__ AS __sr__, collect(DISTINCT relatedNodeIds) AS __srn__ UNWIND n AS rootNodeIds WITH rootNodeIds AS tagNode, __sr__, __srn__ RETURN tagNode AS __sn__, __sr__, __srn__
+	                                ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.480 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (rootNodeIds:`Tag`) WHERE id(rootNodeIds) IN $rootNodeIds WITH collect(rootNodeIds) AS n OPTIONAL MATCH ()-[relationshipIds]-() WHERE id(relationshipIds) IN $relationshipIds WITH n, collect(DISTINCT relationshipIds) AS __sr__ OPTIONAL MATCH (relatedNodeIds) WHERE id(relatedNodeIds) IN $relatedNodeIds WITH n, __sr__ AS __sr__, collect(DISTINCT relatedNodeIds) AS __srn__ UNWIND n AS rootNodeIds WITH rootNodeIds AS tagNode, __sr__, __srn__ RETURN tagNode AS __sn__, __sr__, __srn__
+	                                                                                                                                            ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.480 [WARN] [o.s.data.neo4j.cypher.deprecation] - Neo.ClientNotification.Statement.FeatureDeprecationWarning: This feature is deprecated and will be removed in future versions.
+	MATCH (rootNodeIds:`Tag`) WHERE id(rootNodeIds) IN $rootNodeIds WITH collect(rootNodeIds) AS n OPTIONAL MATCH ()-[relationshipIds]-() WHERE id(relationshipIds) IN $relationshipIds WITH n, collect(DISTINCT relationshipIds) AS __sr__ OPTIONAL MATCH (relatedNodeIds) WHERE id(relatedNodeIds) IN $relatedNodeIds WITH n, __sr__ AS __sr__, collect(DISTINCT relatedNodeIds) AS __srn__ UNWIND n AS rootNodeIds WITH rootNodeIds AS tagNode, __sr__, __srn__ RETURN tagNode AS __sn__, __sr__, __srn__
+	                                                                                                                                                                                                                                                                              ^
+The query used a deprecated function. ('id' has been replaced by 'elementId or consider using an application-generated id')
+2025-11-30 19:39:06.495 [WARN] [o.c.demo.service.Neo4jTagService] - 发现重复标签，删除: Fiction
+2025-11-30 19:39:06.495 [WARN] [o.c.demo.service.Neo4jTagService] - 发现重复标签，删除: Fiction
+2025-11-30 19:39:06.641 [WARN] [o.c.demo.service.Neo4jTagService] - 发现重复标签，删除: Non-Fiction
+2025-11-30 19:39:06.707 [WARN] [o.c.demo.service.Neo4jTagService] - 发现重复标签，删除: Non-Fiction
+2025-11-30 19:39:06.735 [WARN] [o.c.demo.service.Neo4jTagService] - 发现重复标签，删除: Science Fiction
+2025-11-30 19:39:06.746 [INFO] [o.c.demo.service.Neo4jTagService] - 创建顶级标签...
+2025-11-30 19:39:06.794 [WARN] [o.c.demo.service.Neo4jTagService] - 发现重复标签，删除: Science Fiction
+2025-11-30 19:39:06.837 [INFO] [o.c.demo.service.Neo4jTagService] - 创建顶级标签...
+2025-11-30 19:39:06.942 [WARN] [o.s.d.n.c.m.DefaultNeo4jIsNewStrategy] - Instances of class org.controllers.demo.entity.neo4j.TagNode with an assigned id will always be treated as new without version property
+2025-11-30 19:39:07.103 [INFO] [o.c.demo.service.Neo4jTagService] - 创建Fiction的子分类...
+2025-11-30 19:39:07.103 [INFO] [o.c.demo.service.Neo4jTagService] - 创建Fiction的子分类...
+2025-11-30 19:39:07.116 [INFO] [o.c.demo.service.Neo4jTagService] - 创建子标签: Science Fiction
+2025-11-30 19:39:07.119 [INFO] [o.c.demo.service.Neo4jTagService] - 创建子标签: Science Fiction
+2025-11-30 19:39:07.360 [WARN] [o.s.d.n.c.Neo4jPersistenceExceptionTranslator] - Don't know how to translate exception of type class org.neo4j.driver.exceptions.NoSuchRecordException
+2025-11-30 19:39:07.367 [ERROR] [o.c.demo.service.Neo4jTagService] - 创建标签关系失败: Science Fiction -> Fiction
+org.neo4j.driver.exceptions.NoSuchRecordException: Expected a result with a single record, but this result contains at least one more. Ensure your query returns only one record.
+	at org.neo4j.driver.internal.util.Futures.blockingGet(Futures.java:64)
+	at org.neo4j.driver.internal.InternalResult.blockingGet(InternalResult.java:116)
+	at org.neo4j.driver.internal.InternalResult.single(InternalResult.java:65)
+	at org.springframework.data.neo4j.core.DefaultNeo4jClient$DefaultRecordFetchSpec.one(DefaultNeo4jClient.java:445)
+	at org.springframework.data.neo4j.core.Neo4jTemplate.saveImpl(Neo4jTemplate.java:456)
+	at org.springframework.data.neo4j.core.Neo4jTemplate.lambda$save$14(Neo4jTemplate.java:382)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at org.springframework.data.neo4j.core.Neo4jTemplate.save(Neo4jTemplate.java:382)
+	at org.springframework.data.neo4j.repository.support.SimpleNeo4jRepository.save(SimpleNeo4jRepository.java:120)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker$RepositoryFragmentMethodInvoker.lambda$new$0(RepositoryMethodInvoker.java:277)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:170)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:158)
+	at org.springframework.data.repository.core.support.RepositoryComposition$RepositoryFragments.invoke(RepositoryComposition.java:515)
+	at org.springframework.data.repository.core.support.RepositoryComposition.invoke(RepositoryComposition.java:284)
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport$ImplementationMethodExecutionInterceptor.invoke(RepositoryFactorySupport.java:731)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:174)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:149)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:69)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:138)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:223)
+	at jdk.proxy2/jdk.proxy2.$Proxy180.save(Unknown Source)
+	at org.controllers.demo.service.Neo4jTagService.createSubcategoryRelation(Neo4jTagService.java:95)
+	at org.controllers.demo.service.Neo4jTagService.initializeTagGraph(Neo4jTagService.java:169)
+	at org.controllers.demo.config.TagInitializer.lambda$onApplicationEvent$0(TagInitializer.java:39)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+	Suppressed: org.neo4j.driver.internal.util.ErrorUtil$InternalExceptionCause: null
+		at org.neo4j.driver.internal.cursor.ResultCursorImpl.singleAsync(ResultCursorImpl.java:353)
+		at org.neo4j.driver.internal.cursor.DisposableResultCursorImpl.lambda$singleAsync$2(DisposableResultCursorImpl.java:64)
+		at java.base/java.util.concurrent.CompletableFuture.uniComposeStage(CompletableFuture.java:1187)
+		at java.base/java.util.concurrent.CompletableFuture.thenCompose(CompletableFuture.java:2341)
+		at org.neo4j.driver.internal.cursor.DisposableResultCursorImpl.singleAsync(DisposableResultCursorImpl.java:64)
+		... 33 common frames omitted
+2025-11-30 19:39:07.370 [WARN] [o.s.d.n.c.Neo4jPersistenceExceptionTranslator] - Don't know how to translate exception of type class org.neo4j.driver.exceptions.NoSuchRecordException
+2025-11-30 19:39:07.370 [ERROR] [o.c.demo.service.Neo4jTagService] - 初始化标签关系图时发生错误
+org.neo4j.driver.exceptions.NoSuchRecordException: Expected a result with a single record, but this result contains at least one more. Ensure your query returns only one record.
+	at org.neo4j.driver.internal.util.Futures.blockingGet(Futures.java:64)
+	at org.neo4j.driver.internal.InternalResult.blockingGet(InternalResult.java:116)
+	at org.neo4j.driver.internal.InternalResult.single(InternalResult.java:65)
+	at org.springframework.data.neo4j.core.DefaultNeo4jClient$DefaultRecordFetchSpec.one(DefaultNeo4jClient.java:445)
+	at org.springframework.data.neo4j.core.Neo4jTemplate.saveImpl(Neo4jTemplate.java:456)
+	at org.springframework.data.neo4j.core.Neo4jTemplate.lambda$save$14(Neo4jTemplate.java:382)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at org.springframework.data.neo4j.core.Neo4jTemplate.save(Neo4jTemplate.java:382)
+	at org.springframework.data.neo4j.repository.support.SimpleNeo4jRepository.save(SimpleNeo4jRepository.java:120)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker$RepositoryFragmentMethodInvoker.lambda$new$0(RepositoryMethodInvoker.java:277)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:170)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:158)
+	at org.springframework.data.repository.core.support.RepositoryComposition$RepositoryFragments.invoke(RepositoryComposition.java:515)
+	at org.springframework.data.repository.core.support.RepositoryComposition.invoke(RepositoryComposition.java:284)
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport$ImplementationMethodExecutionInterceptor.invoke(RepositoryFactorySupport.java:731)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:174)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:149)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:69)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:138)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:223)
+	at jdk.proxy2/jdk.proxy2.$Proxy180.save(Unknown Source)
+	at org.controllers.demo.service.Neo4jTagService.createSubcategoryRelation(Neo4jTagService.java:95)
+	at org.controllers.demo.service.Neo4jTagService.initializeTagGraph(Neo4jTagService.java:169)
+	at org.controllers.demo.config.TagInitializer.lambda$onApplicationEvent$0(TagInitializer.java:39)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+	Suppressed: org.neo4j.driver.internal.util.ErrorUtil$InternalExceptionCause: null
+		at org.neo4j.driver.internal.cursor.ResultCursorImpl.singleAsync(ResultCursorImpl.java:353)
+		at org.neo4j.driver.internal.cursor.DisposableResultCursorImpl.lambda$singleAsync$2(DisposableResultCursorImpl.java:64)
+		at java.base/java.util.concurrent.CompletableFuture.uniComposeStage(CompletableFuture.java:1187)
+		at java.base/java.util.concurrent.CompletableFuture.thenCompose(CompletableFuture.java:2341)
+		at org.neo4j.driver.internal.cursor.DisposableResultCursorImpl.singleAsync(DisposableResultCursorImpl.java:64)
+		... 33 common frames omitted
+2025-11-30 19:39:07.371 [ERROR] [o.c.demo.config.TagInitializer] - 初始化标签关系图失败，但应用继续运行。可以通过API手动初始化: POST /api/tags/init-graph
+org.neo4j.driver.exceptions.NoSuchRecordException: Expected a result with a single record, but this result contains at least one more. Ensure your query returns only one record.
+	at org.neo4j.driver.internal.util.Futures.blockingGet(Futures.java:64)
+	at org.neo4j.driver.internal.InternalResult.blockingGet(InternalResult.java:116)
+	at org.neo4j.driver.internal.InternalResult.single(InternalResult.java:65)
+	at org.springframework.data.neo4j.core.DefaultNeo4jClient$DefaultRecordFetchSpec.one(DefaultNeo4jClient.java:445)
+	at org.springframework.data.neo4j.core.Neo4jTemplate.saveImpl(Neo4jTemplate.java:456)
+	at org.springframework.data.neo4j.core.Neo4jTemplate.lambda$save$14(Neo4jTemplate.java:382)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at org.springframework.data.neo4j.core.Neo4jTemplate.save(Neo4jTemplate.java:382)
+	at org.springframework.data.neo4j.repository.support.SimpleNeo4jRepository.save(SimpleNeo4jRepository.java:120)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker$RepositoryFragmentMethodInvoker.lambda$new$0(RepositoryMethodInvoker.java:277)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:170)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:158)
+	at org.springframework.data.repository.core.support.RepositoryComposition$RepositoryFragments.invoke(RepositoryComposition.java:515)
+	at org.springframework.data.repository.core.support.RepositoryComposition.invoke(RepositoryComposition.java:284)
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport$ImplementationMethodExecutionInterceptor.invoke(RepositoryFactorySupport.java:731)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:174)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:149)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:69)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:138)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:223)
+	at jdk.proxy2/jdk.proxy2.$Proxy180.save(Unknown Source)
+	at org.controllers.demo.service.Neo4jTagService.createSubcategoryRelation(Neo4jTagService.java:95)
+	at org.controllers.demo.service.Neo4jTagService.initializeTagGraph(Neo4jTagService.java:169)
+	at org.controllers.demo.config.TagInitializer.lambda$onApplicationEvent$0(TagInitializer.java:39)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+	Suppressed: org.neo4j.driver.internal.util.ErrorUtil$InternalExceptionCause: null
+		at org.neo4j.driver.internal.cursor.ResultCursorImpl.singleAsync(ResultCursorImpl.java:353)
+		at org.neo4j.driver.internal.cursor.DisposableResultCursorImpl.lambda$singleAsync$2(DisposableResultCursorImpl.java:64)
+		at java.base/java.util.concurrent.CompletableFuture.uniComposeStage(CompletableFuture.java:1187)
+		at java.base/java.util.concurrent.CompletableFuture.thenCompose(CompletableFuture.java:2341)
+		at org.neo4j.driver.internal.cursor.DisposableResultCursorImpl.singleAsync(DisposableResultCursorImpl.java:64)
+		... 33 common frames omitted
+2025-11-30 19:39:07.373 [ERROR] [o.c.demo.service.Neo4jTagService] - 创建标签关系失败: Science Fiction -> Fiction
+org.neo4j.driver.exceptions.NoSuchRecordException: Expected a result with a single record, but this result contains at least one more. Ensure your query returns only one record.
+	at org.neo4j.driver.internal.util.Futures.blockingGet(Futures.java:64)
+	at org.neo4j.driver.internal.InternalResult.blockingGet(InternalResult.java:116)
+	at org.neo4j.driver.internal.InternalResult.single(InternalResult.java:65)
+	at org.springframework.data.neo4j.core.DefaultNeo4jClient$DefaultRecordFetchSpec.one(DefaultNeo4jClient.java:445)
+	at org.springframework.data.neo4j.core.Neo4jTemplate.saveImpl(Neo4jTemplate.java:456)
+	at org.springframework.data.neo4j.core.Neo4jTemplate.lambda$save$14(Neo4jTemplate.java:382)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at org.springframework.data.neo4j.core.Neo4jTemplate.save(Neo4jTemplate.java:382)
+	at org.springframework.data.neo4j.repository.support.SimpleNeo4jRepository.save(SimpleNeo4jRepository.java:120)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker$RepositoryFragmentMethodInvoker.lambda$new$0(RepositoryMethodInvoker.java:277)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:170)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:158)
+	at org.springframework.data.repository.core.support.RepositoryComposition$RepositoryFragments.invoke(RepositoryComposition.java:515)
+	at org.springframework.data.repository.core.support.RepositoryComposition.invoke(RepositoryComposition.java:284)
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport$ImplementationMethodExecutionInterceptor.invoke(RepositoryFactorySupport.java:731)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:174)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:149)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:69)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:138)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:223)
+	at jdk.proxy2/jdk.proxy2.$Proxy180.save(Unknown Source)
+	at org.controllers.demo.service.Neo4jTagService.createSubcategoryRelation(Neo4jTagService.java:95)
+	at org.controllers.demo.service.Neo4jTagService.initializeTagGraph(Neo4jTagService.java:169)
+	at org.controllers.demo.config.TagInitializer.lambda$onApplicationEvent$0(TagInitializer.java:39)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+	Suppressed: org.neo4j.driver.internal.util.ErrorUtil$InternalExceptionCause: null
+		at org.neo4j.driver.internal.cursor.ResultCursorImpl.singleAsync(ResultCursorImpl.java:353)
+		at org.neo4j.driver.internal.cursor.DisposableResultCursorImpl.lambda$singleAsync$2(DisposableResultCursorImpl.java:64)
+		at java.base/java.util.concurrent.CompletableFuture.uniComposeStage(CompletableFuture.java:1187)
+		at java.base/java.util.concurrent.CompletableFuture.thenCompose(CompletableFuture.java:2341)
+		at org.neo4j.driver.internal.cursor.DisposableResultCursorImpl.singleAsync(DisposableResultCursorImpl.java:64)
+		... 33 common frames omitted
+2025-11-30 19:39:07.373 [ERROR] [o.c.demo.service.Neo4jTagService] - 初始化标签关系图时发生错误
+org.neo4j.driver.exceptions.NoSuchRecordException: Expected a result with a single record, but this result contains at least one more. Ensure your query returns only one record.
+	at org.neo4j.driver.internal.util.Futures.blockingGet(Futures.java:64)
+	at org.neo4j.driver.internal.InternalResult.blockingGet(InternalResult.java:116)
+	at org.neo4j.driver.internal.InternalResult.single(InternalResult.java:65)
+	at org.springframework.data.neo4j.core.DefaultNeo4jClient$DefaultRecordFetchSpec.one(DefaultNeo4jClient.java:445)
+	at org.springframework.data.neo4j.core.Neo4jTemplate.saveImpl(Neo4jTemplate.java:456)
+	at org.springframework.data.neo4j.core.Neo4jTemplate.lambda$save$14(Neo4jTemplate.java:382)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at org.springframework.data.neo4j.core.Neo4jTemplate.save(Neo4jTemplate.java:382)
+	at org.springframework.data.neo4j.repository.support.SimpleNeo4jRepository.save(SimpleNeo4jRepository.java:120)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker$RepositoryFragmentMethodInvoker.lambda$new$0(RepositoryMethodInvoker.java:277)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:170)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:158)
+	at org.springframework.data.repository.core.support.RepositoryComposition$RepositoryFragments.invoke(RepositoryComposition.java:515)
+	at org.springframework.data.repository.core.support.RepositoryComposition.invoke(RepositoryComposition.java:284)
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport$ImplementationMethodExecutionInterceptor.invoke(RepositoryFactorySupport.java:731)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:174)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:149)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:69)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:138)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:223)
+	at jdk.proxy2/jdk.proxy2.$Proxy180.save(Unknown Source)
+	at org.controllers.demo.service.Neo4jTagService.createSubcategoryRelation(Neo4jTagService.java:95)
+	at org.controllers.demo.service.Neo4jTagService.initializeTagGraph(Neo4jTagService.java:169)
+	at org.controllers.demo.config.TagInitializer.lambda$onApplicationEvent$0(TagInitializer.java:39)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+	Suppressed: org.neo4j.driver.internal.util.ErrorUtil$InternalExceptionCause: null
+		at org.neo4j.driver.internal.cursor.ResultCursorImpl.singleAsync(ResultCursorImpl.java:353)
+		at org.neo4j.driver.internal.cursor.DisposableResultCursorImpl.lambda$singleAsync$2(DisposableResultCursorImpl.java:64)
+		at java.base/java.util.concurrent.CompletableFuture.uniComposeStage(CompletableFuture.java:1187)
+		at java.base/java.util.concurrent.CompletableFuture.thenCompose(CompletableFuture.java:2341)
+		at org.neo4j.driver.internal.cursor.DisposableResultCursorImpl.singleAsync(DisposableResultCursorImpl.java:64)
+		... 33 common frames omitted
+2025-11-30 19:39:07.374 [ERROR] [o.c.demo.config.TagInitializer] - 初始化标签关系图失败，但应用继续运行。可以通过API手动初始化: POST /api/tags/init-graph
+org.neo4j.driver.exceptions.NoSuchRecordException: Expected a result with a single record, but this result contains at least one more. Ensure your query returns only one record.
+	at org.neo4j.driver.internal.util.Futures.blockingGet(Futures.java:64)
+	at org.neo4j.driver.internal.InternalResult.blockingGet(InternalResult.java:116)
+	at org.neo4j.driver.internal.InternalResult.single(InternalResult.java:65)
+	at org.springframework.data.neo4j.core.DefaultNeo4jClient$DefaultRecordFetchSpec.one(DefaultNeo4jClient.java:445)
+	at org.springframework.data.neo4j.core.Neo4jTemplate.saveImpl(Neo4jTemplate.java:456)
+	at org.springframework.data.neo4j.core.Neo4jTemplate.lambda$save$14(Neo4jTemplate.java:382)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at org.springframework.data.neo4j.core.Neo4jTemplate.save(Neo4jTemplate.java:382)
+	at org.springframework.data.neo4j.repository.support.SimpleNeo4jRepository.save(SimpleNeo4jRepository.java:120)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker$RepositoryFragmentMethodInvoker.lambda$new$0(RepositoryMethodInvoker.java:277)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:170)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:158)
+	at org.springframework.data.repository.core.support.RepositoryComposition$RepositoryFragments.invoke(RepositoryComposition.java:515)
+	at org.springframework.data.repository.core.support.RepositoryComposition.invoke(RepositoryComposition.java:284)
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport$ImplementationMethodExecutionInterceptor.invoke(RepositoryFactorySupport.java:731)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:174)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:149)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:69)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:138)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:223)
+	at jdk.proxy2/jdk.proxy2.$Proxy180.save(Unknown Source)
+	at org.controllers.demo.service.Neo4jTagService.createSubcategoryRelation(Neo4jTagService.java:95)
+	at org.controllers.demo.service.Neo4jTagService.initializeTagGraph(Neo4jTagService.java:169)
+	at org.controllers.demo.config.TagInitializer.lambda$onApplicationEvent$0(TagInitializer.java:39)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+	Suppressed: org.neo4j.driver.internal.util.ErrorUtil$InternalExceptionCause: null
+		at org.neo4j.driver.internal.cursor.ResultCursorImpl.singleAsync(ResultCursorImpl.java:353)
+		at org.neo4j.driver.internal.cursor.DisposableResultCursorImpl.lambda$singleAsync$2(DisposableResultCursorImpl.java:64)
+		at java.base/java.util.concurrent.CompletableFuture.uniComposeStage(CompletableFuture.java:1187)
+		at java.base/java.util.concurrent.CompletableFuture.thenCompose(CompletableFuture.java:2341)
+		at org.neo4j.driver.internal.cursor.DisposableResultCursorImpl.singleAsync(DisposableResultCursorImpl.java:64)
+		... 33 common frames omitted

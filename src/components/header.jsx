@@ -2,8 +2,10 @@ import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from 'antd/es/layout/layout';
 import {Avatar, Image, message, Space} from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import {fetchUserProfile} from "../service/getProfileService";
 import {getUserId} from "../utils/ID-Storage";
+import {getAvatarUrl} from "../service/avatarService";
 
 const HeaderComponent = () => {
     const navigate = useNavigate();
@@ -43,7 +45,19 @@ const HeaderComponent = () => {
             </div>
 
             <div style={{ cursor: 'pointer' }} onClick={() => navigate('/profile')}>
-                {userInfo && <Avatar size={40} src = {userInfo.avatar} />}
+                {userInfo ? (
+                    <Avatar 
+                        size={40} 
+                        src={userInfo.avatar || getAvatarUrl(userInfo.IDNumber)} 
+                        icon={!userInfo.avatar && <UserOutlined />}
+                        onError={() => {
+                            // 如果头像加载失败，使用默认头像
+                            return false;
+                        }}
+                    />
+                ) : (
+                    <Avatar size={40} icon={<UserOutlined />} />
+                )}
             </div>
         </Header>
     );

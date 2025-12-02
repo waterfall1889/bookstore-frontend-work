@@ -1,0 +1,19 @@
+{
+  "clientId": "20a291be-c19f-498d-a181-5445b35789d6",
+  "mcpServers": {
+    "bookstore": {
+      "command": "python",
+      "args": [
+        "D:\\bookstore\\mcp-server\\bookstore_mcp_server.py"
+      ],
+      "env": {
+        "DB_HOST": "localhost",
+        "DB_PORT": "3306",
+        "DB_NAME": "bookstore",
+        "DB_USER": "root",
+        "DB_PASSWORD": "20050829zzm"
+      }
+    }
+  }
+}
+

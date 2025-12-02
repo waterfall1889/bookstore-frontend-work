@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Flex, Avatar, Typography, Card, message } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import { fetchUserProfile } from '../service/getProfileService';
 import {getUserId} from "../utils/ID-Storage";
+import {getAvatarUrl} from "../service/avatarService";
 
 const { Title, Paragraph } = Typography;
 
@@ -35,7 +37,15 @@ const Profile_showcase = () => {
                 }}
             >
                 <Flex vertical align="center" gap={24}>
-                    <Avatar size={120} src={userInfo.avatar} />
+                    <Avatar 
+                        size={120} 
+                        src={userInfo.avatar || getAvatarUrl(userInfo.IDNumber)} 
+                        icon={!userInfo.avatar && <UserOutlined />}
+                        onError={() => {
+                            // 如果头像加载失败，使用默认图标
+                            return false;
+                        }}
+                    />
                     <div style={{ width: '100%' }}>
                         <Title level={3} style={{ textAlign: 'center' }}>
                             {userInfo.name}

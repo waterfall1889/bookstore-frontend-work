@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Form, Input, InputNumber, Button, Upload, message, Spin, Card, Typography } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Form, Input, InputNumber, Button, Upload, message, Spin, Card, Typography, Tag, Select, Space, Divider } from 'antd';
+import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import { fetchBook } from '../../service/bookcardService';
 import { updateBook } from '../../service/updateBookService';
 import { uploadImage } from '../../service/uploadImageService';
 import { fetchBookDescription } from '../../service/bookDescriptionService';
+import { getBookTags, updateBookTags, getAllTags, addTagToBook, removeTagFromBook } from '../../service/BookTagService';
 import ManagerLayout from "../../components/manager_layout";
 
 const { Title, Text } = Typography;
 const { TextArea } = Input;
+const { Option } = Select;
 
 const BooksEdit = () => {
     const { id } = useParams();
@@ -18,6 +20,9 @@ const BooksEdit = () => {
     const [loading, setLoading] = useState(true);
     const [coverImage, setCoverImage] = useState(null);
     const [book, setBook] = useState(null);
+    const [bookTags, setBookTags] = useState([]);
+    const [allTags, setAllTags] = useState([]);
+    const [tagsLoading, setTagsLoading] = useState(false);
 
     useEffect(() => {
         async function loadBook() {
@@ -43,6 +48,11 @@ const BooksEdit = () => {
                     description: description,
                     validness: data.validness,
                 });
+                
+                // 加载图书标签
+                await loadBookTags(id);
+                // 加载所有可用标签
+                await loadAllTags();
             } catch (error) {
                 message.error('加载图书信息失败');
             } finally {
@@ -51,6 +61,62 @@ const BooksEdit = () => {
         }
         loadBook();
     }, [id, form]);
+
+    const loadBookTags = async (bookId) => {
+        try {
+            const tags = await getBookTags(bookId);
+            setBookTags(tags || []);
+        } catch (error) {
+            console.error('加载图书标签失败:', error);
+            setBookTags([]);
+        }
+    };
+
+    const loadAllTags = async () => {
+        try {
+            setTagsLoading(true);
+            const tags = await getAllTags();
+            setAllTags(tags || []);
+        } catch (error) {
+            console.error('加载所有标签失败:', error);
+            setAllTags([]);
+        } finally {
+            setTagsLoading(false);
+        }
+    };
+
+    const handleAddTag = async (tagName) => {
+        if (!tagName || bookTags.some(t => t.tagName === tagName)) {
+            return;
+        }
+        try {
+            await addTagToBook(id, tagName);
+            await loadBookTags(id);
+            message.success('标签添加成功');
+        } catch (error) {
+            message.error('添加标签失败：' + error.message);
+        }
+    };
+
+    const handleRemoveTag = async (tagName) => {
+        try {
+            await removeTagFromBook(id, tagName);
+            await loadBookTags(id);
+            message.success('标签移除成功');
+        } catch (error) {
+            message.error('移除标签失败：' + error.message);
+        }
+    };
+
+    const handleSaveTags = async () => {
+        try {
+            const tagNames = bookTags.map(t => t.tagName);
+            await updateBookTags(id, tagNames);
+            message.success('标签保存成功');
+        } catch (error) {
+            message.error('保存标签失败：' + error.message);
+        }
+    };
 
     const handleImageUpload = (file) => {
         console.log('选择了新封面图片:', file.name, '预览URL:', URL.createObjectURL(file));
@@ -197,6 +263,57 @@ const BooksEdit = () => {
                                 </div>
                             )}
                         </Upload>
+                    </Form.Item>
+
+                    <Divider>标签管理</Divider>
+                    
+                    <Form.Item label="图书标签">
+                        <div style={{ marginBottom: 16 }}>
+                            <Space wrap>
+                                {bookTags.map(tag => (
+                                    <Tag
+                                        key={tag.tagId}
+                                        closable
+                                        onClose={() => handleRemoveTag(tag.tagName)}
+                                        color="blue"
+                                        style={{ fontSize: '14px', padding: '4px 12px' }}
+                                    >
+                                        {tag.tagName}
+                                    </Tag>
+                                ))}
+                            </Space>
+                        </div>
+                        <Space>
+                            <Select
+                                placeholder="选择标签添加"
+                                style={{ width: 200 }}
+                                loading={tagsLoading}
+                                showSearch
+                                filterOption={(input, option) =>
+                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }
+                                onSelect={(value) => {
+                                    handleAddTag(value);
+                                }}
+                                notFoundContent={tagsLoading ? <Spin size="small" /> : '无可用标签'}
+                            >
+                                {allTags
+                                    .filter(tag => !bookTags.some(bt => bt.tagName === tag.tagName))
+                                    .map(tag => (
+                                        <Option key={tag.tagId} value={tag.tagName}>
+                                            {tag.tagName}
+                                        </Option>
+                                    ))}
+                            </Select>
+                            <Button onClick={handleSaveTags} type="primary">
+                                保存标签
+                            </Button>
+                        </Space>
+                        <div style={{ marginTop: 8 }}>
+                            <Text type="secondary">
+                                提示：点击标签上的 × 可移除标签，或从下拉列表中选择标签添加
+                            </Text>
+                        </div>
                     </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit" block>
