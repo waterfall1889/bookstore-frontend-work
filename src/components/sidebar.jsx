@@ -7,7 +7,8 @@ import {
     UnorderedListOutlined,
     UserOutlined,
     BarChartOutlined,
-    ApiOutlined
+    ApiOutlined,
+    MessageOutlined
 } from '@ant-design/icons';
 import { clearUserInfo, getUserId } from '../utils/ID-Storage';
 import { logout } from '../service/logoutService';
@@ -23,6 +24,7 @@ const Sidebar = () => {
         if (location.pathname.startsWith('/cart')) return 'cart';
         if (location.pathname.startsWith('/orders')) return 'orders';
         if (location.pathname.startsWith('/author-lookup')) return 'authorLookup';
+        if (location.pathname.startsWith('/chatbot')) return 'chatbot';
         return '';
     })();
 
@@ -86,6 +88,11 @@ const Sidebar = () => {
                     key: 'authorLookup',
                     label: '作者查询',
                     onClick: () => { navigate('/author-lookup'); }
+                },
+                {
+                    key: 'chatbot',
+                    label: '智能助手',
+                    onClick: () => { navigate('/chatbot'); }
                 }
             ]
         },
