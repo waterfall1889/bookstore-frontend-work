@@ -16,7 +16,7 @@ app = Flask(__name__)
 CORS(app)  # 允许跨域请求
 
 # DeepSeek API配置
-DEEPSEEK_API_KEY = "sk-a5bcaa2835eb41c3bd9eed6e8048f081"
+DEEPSEEK_API_KEY = ""
 DEEPSEEK_API_URL = "https://api.deepseek.com/v1/chat/completions"
 
 # 数据库配置（用于直接调用MCP工具）
